@@ -1,1 +1,2 @@
 # LimmaKZ
+Nurik bot
