@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /limma
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+spring:
+  application:
+    name: limmaGatewayPortal
