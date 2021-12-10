@@ -9,22 +9,18 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>kz.reself.limma</groupId>
-	<artifactId>discovery</artifactId>
+	<artifactId>gateway-crm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>discovery</name>
-	<description>Discovery Server</description>
+	<name>gateway-crm</name>
+	<description>Gateway crm service</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 
 		<dependency>
