@@ -151,9 +151,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "Select * FROM product WHERE organization_id = ?1 AND state = ?2", nativeQuery = true)
     Page<Product> organizationStatePageable(Integer organization, Integer state, Pageable pageable);
 
-    @Query(value = "Select * FROM product WHERE LOWER(name) like %?1% OR LOWER(description) like %?1% AND organization_id = ?2", nativeQuery = true)
+    @Query(value = "Select * FROM product WHERE LOWER(name) like concat('%', ?1, '%') OR LOWER(description) like concat('%', ?1, '%') AND organization_id = ?2", nativeQuery = true)
     Page<Product> searchStringAndOrganizationPageable(String searchString, Integer organization, Pageable pageable);
 
-    @Query(value = "Select * FROM product WHERE LOWER(name) like %?1% OR LOWER(description) like %?1% AND state = ?2", nativeQuery = true)
+    @Query(value = "Select * FROM product WHERE LOWER(name) like concat('%', ?1, '%') OR LOWER(description) like concat('%', ?1, '%') AND state = ?2", nativeQuery = true)
     Page<Product> searchStatePageable(String searchString, Integer state, Pageable pageable);
 }

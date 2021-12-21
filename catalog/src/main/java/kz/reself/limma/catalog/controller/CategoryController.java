@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Category"}, description = "Управление категориями ")
 public class CategoryController extends CommonService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
+
+    public static final String PRIVATE_URL = "/private/categories";
+    public static final String PUBLIC_URL = "/public/categories";
 
     @Autowired
     private ICategoryService categoryService;
@@ -42,7 +45,7 @@ public class CategoryController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Category существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -86,7 +89,7 @@ public class CategoryController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readIterable() {
         return builder(success(categoryService.findAllCategoriesIterable()));
     }
@@ -95,7 +98,7 @@ public class CategoryController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> allActive() {
         return builder(success(categoryService.findAllCategoriesActive()));
     }
@@ -106,7 +109,7 @@ public class CategoryController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(categoryService.findCategoryById(id)));
     }
@@ -117,14 +120,14 @@ public class CategoryController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/private/categories/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody Category category) {
         return builder(success(categoryService.createCategory(category)));
     }
 
     @ApiOperation(value = "Обновить категорию", tags = {"Category"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/categories/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody Category category) {
         return builder(success(categoryService.updateCategory(category)));
     }
@@ -132,14 +135,14 @@ public class CategoryController extends CommonService {
 
     @ApiOperation(value = "Удалить категорию", tags = {"Category"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/categories/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteKiInformedConsent(@PathVariable(name = "id") Integer categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return builder(success("success"));
     }
 
     @ApiOperation(value = "Поулчить список родительских категорий определенной категории", tags = {"Category"})
-    @RequestMapping(value = "/v1/public/categories/read/parents/category/{categoryId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/read/parents/category/{categoryId}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> getByParentID(@PathVariable(name = "categoryId") Integer categoryId) {
         return ResponseEntity.ok(categoryService.findParentCategoriesById(categoryId));
     }
@@ -148,7 +151,7 @@ public class CategoryController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/parents/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/parents/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readGrandParents() {
         return builder(success(categoryService.findAllGrandparentsIterable()));
     }
@@ -157,7 +160,7 @@ public class CategoryController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/parents/{parentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/parents/{parentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readParents(@PathVariable("parentId") Integer id) {
         return builder(success(categoryService.findAllParentsIterable(id)));
     }
@@ -166,7 +169,7 @@ public class CategoryController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/categories/read/childrens/{childId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/childrens/{childId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readChildren(@PathVariable("childId") Integer id) {
         return builder(success(categoryService.findAllChildrenIterable(id)));
     }

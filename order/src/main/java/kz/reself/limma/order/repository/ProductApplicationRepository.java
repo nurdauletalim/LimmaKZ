@@ -14,7 +14,6 @@ import java.util.List;
 
 @Repository("productApplicationRepository")
 public interface ProductApplicationRepository extends JpaRepository<ProductApplication, Integer> {
-    ProductApplication getById(Integer id);
     List<ProductApplication> getAllByProductOrganizationId(Integer id);
     List<ProductApplication> getAllByContact(String contact);
     List<ProductApplication> getAllByStatus(ProductApplicationStatus status);
@@ -22,7 +21,7 @@ public interface ProductApplicationRepository extends JpaRepository<ProductAppli
 
     ProductApplication findProductApplicationByProductIdAndStatus(Integer productId, ProductApplicationStatus status);
 
-    @Query(value = "Select * FROM product_application WHERE LOWER(comment) like %?1% or LOWER(email) like %?1% or LOWER(name) like %?1% or replace(contact,' ','') like %?1%", nativeQuery = true)
+    @Query(value = "Select * FROM product_application WHERE LOWER(comment) like concat('%', ?1, '%') or LOWER(email) like concat('%', ?1, '%') or LOWER(name) like concat('%', ?1, '%') or replace(contact,' ','') like concat('%', ?1, '%')", nativeQuery = true)
     List<ProductApplication> findAllSearchString(String searchString);
 
     @Query(value = "SELECT COUNT(id) FROM product_application WHERE (product_id in " +

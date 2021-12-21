@@ -12,10 +12,13 @@ spring:
   application:
     name: limmaCatalog
   datasource:
-    url: jdbc:postgresql://localhost:5432/sapa
-    username: postgres
-    password: 123
+    url: jdbc:postgresql://localhost:5431/sapa
+    username: sapa
+    password: sapa_pass
     driver-class-name: org.postgresql.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   kafka:
     consumer:
       bootstrap-servers: localhost:9095

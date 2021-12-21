@@ -24,12 +24,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 @Api(tags = "Application",description = "Управление Application")
-public class ProductApplicationController extends CommonService {
+public class ProductApplicationController{
 
     public static final String PRIVATE_URL = "/private/applications";
     public static final String PUBLIC_URL = "/public/applications";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+//    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private IProductApplicationService iProductApplicationService;

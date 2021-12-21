@@ -4,6 +4,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @SpringBootApplication(scanBasePackages = "kz.reself.limma")
 @EnableEurekaClient
+@EnableConfigurationProperties
 //@EnableHystrix
 //@EnableHystrixDashboard
 //@EnableCircuitBreaker
@@ -36,7 +38,7 @@ public class CatalogApplication {
 	@Bean
 	public ProducerFactory<String, Integer> greetingProducerFactory() {
 		Map<String, Object> configProps = new HashMap<>();
-		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9095");
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 		return new DefaultKafkaProducerFactory<>(configProps);

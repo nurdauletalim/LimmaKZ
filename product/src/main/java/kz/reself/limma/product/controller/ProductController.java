@@ -300,13 +300,13 @@ public class ProductController extends CommonService {
 
     @ApiOperation(value = "Получить список product По свойствам", tags = {"Product"})
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "categoryId", dataType = "string", value = ""),
-            @ApiImplicitParam(name = "minPrice", dataType = "int", value = ""),
-            @ApiImplicitParam(name = "maxPrice", dataType = "int", value = ""),
-            @ApiImplicitParam(name = "pageNumber", dataType = "int", value = ""),
-            @ApiImplicitParam(name = "pageSize", dataType = "int", value = ""),
-            @ApiImplicitParam(name = "sort", dataType = "string", value = ""),
-            @ApiImplicitParam(name = "sortBy", dataType = "string", value = "")
+            @ApiImplicitParam(name = "categoryId", dataType = "string", value = "", paramType = "query"),
+            @ApiImplicitParam(name = "minPrice", dataType = "int", value = "", paramType = "query"),
+            @ApiImplicitParam(name = "maxPrice", dataType = "int", value = "", paramType = "query"),
+            @ApiImplicitParam(name = "pageNumber", dataType = "int", value = "", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", dataType = "int", value = "", paramType = "query"),
+            @ApiImplicitParam(name = "sort", dataType = "string", value = "", paramType = "query"),
+            @ApiImplicitParam(name = "sortBy", dataType = "string", value = "", paramType = "query")
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")

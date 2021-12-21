@@ -2,8 +2,10 @@ package kz.reself.limma.account;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties
 public class AccountApplication {
 
 	public static void main(String[] args) {

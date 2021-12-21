@@ -19,14 +19,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Brand"},value = "Brand")
 public class BrandController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/brands";
+    public static final String PUBLIC_URL = "/public/brands";
 
     @Autowired
     private IBrandService iBrandService;
 
-    @RequestMapping(value = "/v1/public/brands/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -68,44 +71,44 @@ public class BrandController extends CommonService {
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Create Brand")
-    @RequestMapping(value = "/v1/private/brands/create",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createBrand(@RequestBody Brand brand){
         return builder(success(iBrandService.createBrand(brand)));
     }
 
     @ApiOperation(value = "Get all brands")
-    @RequestMapping(value = "/v1/public/brands/read/all/iterable",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllBrandsIterable(){
         return builder(success(iBrandService.getBrandsIterable()));
     }
 
-    @RequestMapping(value = "/v1/public/brands/read/all/dto/iterable",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/dto/iterable",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllBrandsWithCategoryNameIterable(){
         return builder(success(iBrandService.getBrandsIterableWithCategoryName()));
     }
 
     @ApiOperation(value = "Get all brands by category")
-    @RequestMapping(value = "/v1/public/brands/read/category/{categoryId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/category/{categoryId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllBrandsByCategoryId(@PathVariable Integer categoryId){
         return builder(success(iBrandService.getBrandsByCategoryId(categoryId)));
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Delete Brand")
-    @RequestMapping(value = "/v1/private/brands/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> deleteBrand(@PathVariable Integer id){
         iBrandService.deleteBrand(id);
         return builder(success("success"));
     }
 
     @ApiOperation(value = "Get brand by id")
-    @RequestMapping(value = "/v1/public/brands/read/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getBrandById(@PathVariable Integer id){
         return builder(success(iBrandService.getBrandById(id)));
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/brands/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody Brand brand) {
         return builder(success(iBrandService.updateBrand(brand)));
     }

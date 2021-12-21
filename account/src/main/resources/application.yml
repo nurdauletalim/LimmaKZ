@@ -16,6 +16,9 @@ spring:
     username: sapa
     password: sapa_pass
     driver-class-name: org.postgresql.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 #  r2dbc:
 #    url: ${DB_URL:r2dbc:postgresql://localhost:5431/sapa}
 #    username: sapa

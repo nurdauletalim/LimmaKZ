@@ -25,10 +25,10 @@ import java.util.function.Function;
 public class ProductApplicationService implements IProductApplicationService {
 
     @Qualifier("productApplicationRepository")
-    ProductApplicationRepository productApplicationRepository;
+    private ProductApplicationRepository productApplicationRepository;
 
     @Qualifier("productRepository")
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
 //    @Autowired
 //    private LimmaBot limmaBot;

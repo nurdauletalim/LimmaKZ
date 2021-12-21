@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Organization"}, description = "Управление organization")
 public class OrganizationController extends CommonService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationController.class);
     @Autowired
     IOrganizationService organizationService;
+
+    public static final String PRIVATE_URL = "/private/organizations";
+    public static final String PUBLIC_URL = "/public/organizations";
 
     @ApiOperation(value = "Получить список Organization pageable", tags = {"Organization"})
     @ApiImplicitParams({
@@ -36,7 +39,7 @@ public class OrganizationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Organization существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/organizations/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllOrganizationPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -79,14 +82,14 @@ public class OrganizationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/organizations/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllOrganizationIterable() {
         return builder(success(organizationService.getOrganizationsIterable()));
     }
 
     @ApiOperation(value = "Удалить Organization", tags = {"Organization"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/organizations/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteOrganizationById(@PathVariable(name = "id") Integer organizationId) {
         organizationService.deleteOrganizationById(organizationId);
         return builder(success("success"));
@@ -98,13 +101,13 @@ public class OrganizationController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/organizations/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody Organization organization) {
         return builder(success(organizationService.updateOrganization(organization)));
     }
 
 
-    @RequestMapping(value = "/v1/public/organizations/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getOrganizationById(@PathVariable("id") Integer id) {
         return builder(success(organizationService.getOrganizationById(id)));
     }
@@ -115,7 +118,7 @@ public class OrganizationController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/private/organizations/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createOrganization(@RequestBody Organization organization) {
         return builder(success(organizationService.addOrganization(organization)));
     }

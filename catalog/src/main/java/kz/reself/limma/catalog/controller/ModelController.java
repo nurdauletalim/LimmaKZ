@@ -20,28 +20,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/v1")
 @Api(tags = {"Model"}, description = "Управление model", authorizations = {@Authorization(value = "bearerAuth")})
 public class ModelController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/models";
+    public static final String PUBLIC_URL = "/public/models";
 
     @Autowired
     private ModelService modelService;
 
-    @RequestMapping(value = "/v1/public/models/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get() {
         return builder(success(modelService.getModelsIterable()));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/brand/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/brand/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getModelsByCategoryIdAndBrandId(@PathVariable Integer id) {
         return builder(success(modelService.getModelsByBrand(id)));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/dto/brand/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/dto/brand/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getModelsDTOByCategoryIdAndBrandId(@PathVariable Integer id) {
         return builder(success(modelService.getModelsDTOByBrand(id)));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/brand/pageable/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/brand/pageable/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getModelsByBrandIdPageable(@PathVariable Integer id) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
         int pageNumber = PageableConstant.PAGE_NUMBER;
@@ -55,40 +59,40 @@ public class ModelController extends CommonService {
         return builder(success(modelService.getModelsByBrandPageable(id, pageableRequest)));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/product/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/product/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getModelsProductId(@PathVariable Integer id) {
         return builder(success(modelService.getModelsByProductId(id)));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/brand", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/brand", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getModelsByBrandDisplayName(@RequestParam String brandDisplayName, @RequestParam Integer categoryId) {
         return builder(success(modelService.getModelsByBrandDisplayNameAndCategoryId(brandDisplayName, categoryId)));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/brandId/{brandId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/brandId/{brandId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getModelsByBrandId(@PathVariable(name = "brandId") Integer brandId) {
         return builder(success(modelService.getModelsByBrand(brandId)));
     }
 
 //    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/private/models/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> create(@RequestBody Model model) {
         return builder(success(modelService.addModel(model)));
     }
 
     @ApiOperation(value = "Удалить Model", tags = {"Model"})
-    @RequestMapping(value = "/v1/public/models/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> delete(@PathVariable(name = "id") Integer id) {
         modelService.deleteModelById(id);
         return builder(success("success"));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         return builder(success(modelService.getModelById(id)));
     }
 
-    @RequestMapping(value = "/v1/public/models/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
         int pageNumber = PageableConstant.PAGE_NUMBER;
