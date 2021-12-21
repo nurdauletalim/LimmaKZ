@@ -2,17 +2,29 @@ server:
   port: 8084
   servlet:
     context-path: /account
+spring:
+  application:
+    name: limmaAccount
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5431/sapa?createDatabaseIfNotExist=true
+    username: sapa
+    password: sapa_pass
+    driver-class-name: org.postgresql.Driver
+#  r2dbc:
+#    url: ${DB_URL:r2dbc:postgresql://localhost:5431/sapa}
+#    username: sapa
+#    password: sapa_pass
+#  main:
+#    web-application-type: reactive
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
-spring:
-  application:
-    name: limmaAccount
-  datasource:
-    url: jdbc:postgresql://localhost:5430/sapa
-    username: postgres
-    password: 123
-    driver-class-name: org.postgresql.Driver

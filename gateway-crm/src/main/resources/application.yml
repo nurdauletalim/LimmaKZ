@@ -2,12 +2,62 @@ server:
   port: 8087
   servlet:
     context-path: /crm
+spring:
+  application:
+    name: limmaGatewayCRM
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  cloud:
+    gateway:
+      routes:
+        - id: ACCOUNT-SERVICE
+          uri: ${ACCOUNT_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/account/**
+        - id: CATALOG-SERVICE
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/catalog/**
+        - id: ORDER-SERVICE
+          uri: ${ORDER_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/order/**
+        - id: PRODUCT-SERVICE
+          uri: ${PRODUCT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/product/**
+        - id: PROMOTION-SERVICE
+          uri: ${PROMOTION_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/promotion/**
+        - id: REVIEW-SERVICE
+          uri: ${REVIEW_SERVICE_URL:http://localhost:8086}
+          predicates:
+            - Path=/review/**
+#          filters:
+#            - StripPrefix=1
+  r2dbc:
+    url: ${DB_URL:r2dbc:postgresql://localhost:5431/sapa}
+    username: sapa
+    password: sapa_pass
+  main:
+    web-application-type: reactive
+springbootwebflux:
+  jjwt:
+    password:
+      encoder:
+        secret: myjwtsecret
+        iteration: 33
+        keylength: 256
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave512bitsKeySize
+    expiration: 30000
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
-spring:
-  application:
-    name: limmaGatewayCRM
+
