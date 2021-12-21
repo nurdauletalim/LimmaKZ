@@ -1,13 +1,12 @@
-package kz.reself.limma.product.controller;
+package kz.reself.limma.order.controller;
 
 import io.swagger.annotations.*;
-import kz.reself.limma.product.model.ProductApplication;
-import kz.reself.limma.product.constant.PageableConstant;
-import kz.reself.limma.product.model.ApplicationDTO;
-import kz.reself.limma.product.model.ProductApplicationStatus;
-import kz.reself.limma.product.repository.ProductApplicationRepository;
-import kz.reself.limma.product.service.IProductApplicationService;
-import kz.reself.limma.product.utils.CommonService;
+import kz.reself.limma.order.model.ApplicationDTO;
+import kz.reself.limma.order.model.ProductApplication;
+import kz.reself.limma.order.model.ProductApplicationStatus;
+import kz.reself.limma.order.repository.ProductApplicationRepository;
+import kz.reself.limma.order.service.IProductApplicationService;
+import kz.reself.limma.order.constant.PageableConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +24,11 @@ import java.util.Map;
 @RestController
 @RequestMapping()
 @Api(tags = "Application",description = "Управление Application")
-public class ProductApplicationController extends CommonService {
-
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+public class ProductApplicationController{
 
     @Autowired
     private IProductApplicationService iProductApplicationService;
 
-    @Autowired
-    private ProductApplicationRepository productApplicationRepository;
 
     @ApiOperation(value = "Получить список Application pageable", tags = {"Application"})
     @ApiImplicitParams({
@@ -74,9 +69,9 @@ public class ProductApplicationController extends CommonService {
 
         final Pageable pageableRequest = PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortBy));
 
-        Page<kz.reself.limma.product.model.ProductApplication> allApplicationPageable = this.iProductApplicationService.getAllApplicationPageable(pageableRequest);
+        Page<ProductApplication> allApplicationPageable = this.iProductApplicationService.getAllApplicationPageable(pageableRequest);
 
-        return builder(success(allApplicationPageable));
+        return new ResponseEntity<>(allApplicationPageable, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список ApplicationDTO pageable", tags = {"ApplicationDTO"})
@@ -132,7 +127,7 @@ public class ProductApplicationController extends CommonService {
             allApplicationPageable = this.iProductApplicationService.findAllDTOSPageable(pageableRequest);
         }
 
-        return builder(success(allApplicationPageable));
+        return new ResponseEntity<>(allApplicationPageable, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список ApplicationDTO pageable", tags = {"ApplicationDTO"})
@@ -181,7 +176,7 @@ public class ProductApplicationController extends CommonService {
             allApplicationPageable = this.iProductApplicationService.getAllDTObyOrgIdPageable(orgId,pageableRequest);
         }
 
-        return builder(success(allApplicationPageable));
+        return new ResponseEntity<>(allApplicationPageable, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список Application iterable", tags = {"Application"})
@@ -190,7 +185,7 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readApplicationIterable() {
-        return builder(success(iProductApplicationService.getAllApplicationsIterable()));
+        return new ResponseEntity<>(iProductApplicationService.getAllApplicationsIterable(), HttpStatus.OK);
     }
 
 
@@ -201,7 +196,7 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
-        return builder(success(iProductApplicationService.getProductApplicationById(id)));
+        return new ResponseEntity<>(iProductApplicationService.getProductApplicationById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить Application by Organization", tags = {"Application"})
@@ -211,7 +206,7 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/read/all/organization/{organizationId}/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationsByOrganization(@PathVariable("organizationId") Integer id) {
-        return builder(success(iProductApplicationService.getApplicationsByOrganizationId(id)));
+        return new ResponseEntity<>(iProductApplicationService.getApplicationsByOrganizationId(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Создать Application", tags = {"Application"})
@@ -221,7 +216,7 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createApplication(@RequestBody ProductApplication productApplication) {
-        return builder(success(iProductApplicationService.createApplication(productApplication)));
+        return new ResponseEntity<>(iProductApplicationService.createApplication(productApplication), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Обновить Application", tags = {"Application"})
@@ -231,14 +226,16 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> updateApplication(@RequestBody ProductApplication productApplication) {
-        return builder(success(iProductApplicationService.updateApplication(productApplication)));
+        return new ResponseEntity<>(iProductApplicationService.updateApplication(productApplication), HttpStatus.OK);
+
     }
 
     @ApiOperation(value = "Удалить Application", tags = {"Application"})
     @RequestMapping(value = "/v1/public/applications/delete/{applicationId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteApplicationById(@PathVariable(name = "applicationId") Integer id) {
         iProductApplicationService.deleteApplicationById(id);
-        return builder(success("success"));
+        return new ResponseEntity<>("success", HttpStatus.OK);
+
     }
 
     @ApiOperation(value = "Получить список ApplicationDTO iterable", tags = {"ApplicationDTO"})
@@ -247,7 +244,8 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/read/DTO/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readApplicationDTOIterable() {
-        return builder(success(iProductApplicationService.findAllDTOSIterable()));
+        return new ResponseEntity<>(iProductApplicationService.findAllDTOSIterable(), HttpStatus.OK);
+
     }
 
 
@@ -258,7 +256,7 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/read/DTO/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getDTO(@PathVariable("id") Integer id) {
-        return builder(success(iProductApplicationService.getDTOById(id)));
+        return new ResponseEntity<>(iProductApplicationService.getDTOById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить ApplicationDTO by Organization", tags = {"ApplicationDTO"})
@@ -268,7 +266,7 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/read/DTO/all/organization/{organizationId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationDTOsByOrganization(@PathVariable("organizationId") Integer id) {
-        return builder(success(iProductApplicationService.getAllDTObyOrgId(id)));
+        return new ResponseEntity<>(iProductApplicationService.getAllDTObyOrgId(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Обновить ApplicationDTO", tags = {"ApplicationDTO"})
@@ -278,18 +276,20 @@ public class ProductApplicationController extends CommonService {
     })
     @RequestMapping(value = "/v1/public/applications/update/DTO", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> updateApplicationDTO(@RequestBody ApplicationDTO productApplicationDTO) {
-        return builder(success(iProductApplicationService.updateApplicationDTO(productApplicationDTO)));
+        return new ResponseEntity<>(iProductApplicationService.updateApplicationDTO(productApplicationDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/v1/public/applications/read/all/{contact}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationsDTOByContact(@PathVariable("contact") String contact) {
-        return builder(success(iProductApplicationService.getApplicationsByContacts(contact)));
+        return new ResponseEntity<>(iProductApplicationService.getApplicationsByContacts(contact), HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "/v1/public/applications/check", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationsDTOByContact(@RequestParam("name") String name,@RequestParam("contact") String contact,@RequestParam("productId") Integer productId) {
 //        System.out.println(application);
-        return builder(success(iProductApplicationService.checkApplication(name, contact, productId)));
+        return new ResponseEntity<>(iProductApplicationService.checkApplication(name, contact, productId), HttpStatus.OK);
+
     }
 
     @ApiOperation(value = "Получить список ApplicationDTO pageable", tags = {"ApplicationDTO"})
@@ -333,7 +333,7 @@ public class ProductApplicationController extends CommonService {
 
         Page<ApplicationDTO> allApplicationPageable = this.iProductApplicationService.getAllByStatusPageable(status, pageableRequest);
 
-        return builder(success(allApplicationPageable));
+        return new ResponseEntity<>(allApplicationPageable, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/v1/public/applications/read/DTO/status/{status}/organization/{orgId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -367,12 +367,14 @@ public class ProductApplicationController extends CommonService {
 
         Page<ApplicationDTO> allApplicationPageable = this.iProductApplicationService.getByStatusAndOrganizationPageable(status, orgId, pageableRequest);
 
-        return builder(success(allApplicationPageable));
+        return new ResponseEntity<>(allApplicationPageable, HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "/v1/public/applications/count/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAmountByOrgId(@PathVariable(name = "organizationId") Integer organizationId, @PathVariable(name = "interval") String interval) {
-        return builder(success(iProductApplicationService.getAmountApplicationByOrganizationId(organizationId,interval)));
+        return new ResponseEntity<>(iProductApplicationService.getAmountApplicationByOrganizationId(organizationId,interval), HttpStatus.OK);
+
     }
 
     @ApiOperation(value = "Получить список applications по категории", tags = {"Application"})
@@ -416,7 +418,8 @@ public class ProductApplicationController extends CommonService {
         }
         final Pageable pageableRequest = PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortBy));
 
-        return builder(success(productApplicationRepository.getAllByProductId(productId, pageableRequest)));
+        return new ResponseEntity<>(iProductApplicationService.getAllProductId(productId, pageableRequest), HttpStatus.OK);
+
     }
 
 }

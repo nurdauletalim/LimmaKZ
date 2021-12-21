@@ -1,4 +1,4 @@
-package kz.reself.limma.product.model;
+package kz.reself.limma.order.model;
 
 public enum ProductApplicationStatus {
     NEW,
