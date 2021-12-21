@@ -22,29 +22,33 @@ import java.util.Map;
 @RestController
 @Api(value = "Управление PROMOTION")
 public class PromotionController {
+
+    public static final String PRIVATE_URL = "/private/promotions";
+    public static final String PUBLIC_URL = "/public/promotions";
+
     @Autowired
     PromotionService promotionService;
 
     @ApiOperation(value = "Get all promotions")
-    @RequestMapping(value = "/v1/public/promotions/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get() {
         return new ResponseEntity<>(promotionService.getAllActive(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get all active count")
-    @RequestMapping(value = "/v1/public/promotions/count/active/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/count/active/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getPromotionsCount(@Param(value = "count") Integer count) {
         return new ResponseEntity<>(promotionService.getAllActiveCount(count), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get all active DTO count")
-    @RequestMapping(value = "/v1/public/promotions/dto/count/active/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/dto/count/active/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getPromotionsDTO(@Param(value = "count") Integer count) {
         return new ResponseEntity<>(promotionService.getAllActiveDTO(count), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get promotions")
-    @RequestMapping(value = "/v1/public/promotions/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -82,7 +86,7 @@ public class PromotionController {
     }
 
     @ApiOperation(value = "Get promotions by id")
-    @RequestMapping(value = "/v1/public/promotions/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(promotionService.getById(id), HttpStatus.OK);
     }

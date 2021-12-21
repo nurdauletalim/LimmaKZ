@@ -25,6 +25,9 @@ import java.util.List;
 @Api(tags = {"Image"}, description = "Управление image")
 public class PromotionImageController {
 
+    public static final String PRIVATE_URL = "/private/brands";
+    public static final String PUBLIC_URL = "/public/brands";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PromotionImageController.class);
     @Autowired
     IPromotionImageService iPromotionImageService;

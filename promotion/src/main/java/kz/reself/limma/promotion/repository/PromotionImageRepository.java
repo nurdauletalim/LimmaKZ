@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface PromotionImageRepository extends JpaRepository<PromotionImage, Integer> {
 
-    PromotionImage getById(Integer id);
+    PromotionImage getByIdAndIdIsNotNull(Integer id);
 
     List<PromotionImage> findAllByIdIn(List<Integer> imageIds);
 
