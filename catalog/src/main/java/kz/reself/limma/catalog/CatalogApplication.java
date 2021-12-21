@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -17,14 +19,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-//import org.springframework.cloud.netflix.hystrix.EnableHystrix;
-//import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
 @SpringBootApplication(scanBasePackages = "kz.reself.limma")
 @EnableEurekaClient
-//@EnableHystrix
-//@EnableHystrixDashboard
-//@EnableCircuitBreaker
+@EnableHystrix
+@EnableHystrixDashboard
+@EnableCircuitBreaker
 public class CatalogApplication {
 
 	public static void main(String[] args) {
