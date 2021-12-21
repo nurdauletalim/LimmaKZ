@@ -1,5 +1,7 @@
 package kz.reself.limma.catalog.service.impl;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import kz.reself.limma.catalog.constant.JobConst;
 import kz.reself.limma.catalog.model.Brand;
 import kz.reself.limma.catalog.model.Model;
@@ -48,11 +50,25 @@ public class ModelService implements IModelService {
     }
 
     @Override
+    @HystrixCommand(
+            fallbackMethod = "getModelById",
+            threadPoolKey = "alternativeMethod",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "100"),
+                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+            })
     public Model getModelById(Integer id) {
         return modelRepository.getByIdAndState(id, State.ACTIVE);
     }
 
     @Override
+    @HystrixCommand(
+            fallbackMethod = "getByDisplayNameAndState",
+            threadPoolKey = "alternativeMethod",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "100"),
+                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+            })
     public Model getByDisplayNameAndState(String value) {
         return modelRepository.getByDisplayNameAndState(value, State.ACTIVE);
     }
@@ -123,4 +139,9 @@ public class ModelService implements IModelService {
     public Page<Model> getModelsSearchStringAndBrandId(String searchString, int brandId, Pageable pageableRequest) {
         return modelRepository.findAllByNameAndBrandId(searchString,brandId, pageableRequest);
     }
+
+    public String alternativeMethod(){
+        return "This server is not available";
+    }
+
 }
