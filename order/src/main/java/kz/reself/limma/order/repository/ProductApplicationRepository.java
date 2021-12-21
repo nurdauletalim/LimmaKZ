@@ -1,8 +1,7 @@
-package kz.reself.limma.product.repository;
+package kz.reself.limma.order.repository;
 
-
-import kz.reself.limma.product.model.ProductApplication;
-import kz.reself.limma.product.model.ProductApplicationStatus;
+import kz.reself.limma.order.model.ProductApplication;
+import kz.reself.limma.order.model.ProductApplicationStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

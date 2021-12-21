@@ -1,8 +1,8 @@
-package kz.reself.limma.product.service;
+package kz.reself.limma.order.service;
 
-import kz.reself.limma.product.model.ApplicationDTO;
-import kz.reself.limma.product.model.ProductApplication;
-import kz.reself.limma.product.model.ProductApplicationStatus;
+import kz.reself.limma.order.model.ApplicationDTO;
+import kz.reself.limma.order.model.ProductApplication;
+import kz.reself.limma.order.model.ProductApplicationStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,6 +16,8 @@ public interface IProductApplicationService {
     ProductApplication getProductApplicationById(Integer id);
 
     List<ProductApplication> getApplicationsByOrganizationId(Integer id);
+
+    Page<ProductApplication> getAllProductId(Integer productId, Pageable pageableRequest);
 
     ProductApplication createApplication(ProductApplication productApplication);
 

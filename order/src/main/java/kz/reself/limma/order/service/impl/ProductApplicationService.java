@@ -1,11 +1,9 @@
-package kz.reself.limma.product.service.impl;
+package kz.reself.limma.order.service.impl;
 
-//import kz.reself.sapa.server.bot.LimmaBot;
-
-import kz.reself.limma.product.model.*;
-import kz.reself.limma.product.repository.ProductApplicationRepository;
-import kz.reself.limma.product.repository.ProductRepository;
-import kz.reself.limma.product.service.IProductApplicationService;
+import kz.reself.limma.order.model.*;
+import kz.reself.limma.order.repository.ProductApplicationRepository;
+import kz.reself.limma.order.repository.ProductRepository;
+import kz.reself.limma.order.service.IProductApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,13 +27,6 @@ public class ProductApplicationService implements IProductApplicationService {
     ProductRepository productRepository;
 
 //    @Autowired
-//    ImageService imageService;
-//
-//    @Autowired
-//    private AccountService accountService;
-
-
-//    @Autowired
 //    private LimmaBot limmaBot;
 
     @Override
@@ -56,6 +47,11 @@ public class ProductApplicationService implements IProductApplicationService {
     @Override
     public List<ProductApplication> getApplicationsByOrganizationId(Integer id) {
         return productApplicationRepository.getAllByProductOrganizationId(id);
+    }
+
+    @Override
+    public Page<ProductApplication> getAllProductId(Integer productId, Pageable pageableRequest) {
+        return productApplicationRepository.getAllByProductId(productId, pageableRequest);
     }
 
     @Override
