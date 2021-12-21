@@ -1,4 +1,4 @@
-package kz.reself.limma.promotion.config;
+package kz.reself.limma.review.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("kz.reself.limma.promotion"))
+                .apis(RequestHandlerSelectors.basePackage("kz.reself.limma.review"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
