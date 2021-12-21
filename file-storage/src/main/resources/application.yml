@@ -1,0 +1,18 @@
+server:
+  port: 443
+  servlet:
+    context-path: /file-storage
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+spring:
+  application:
+    name: limmaMinio
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sapa
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver

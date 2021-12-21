@@ -53,6 +53,11 @@ public class ModelService implements IModelService {
     }
 
     @Override
+    public Model getByDisplayNameAndState(String value) {
+        return modelRepository.getByDisplayNameAndState(value, State.ACTIVE);
+    }
+
+    @Override
     public Model addModel(Model Model) {
         String value;
         value = Model.getDisplayName().replaceAll(" ","_");

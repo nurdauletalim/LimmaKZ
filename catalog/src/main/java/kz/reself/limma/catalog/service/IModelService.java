@@ -14,6 +14,8 @@ public interface IModelService {
 
     List<ModelDTO> getModelsDTOByBrand(Integer brandId);
 
+    Model getByDisplayNameAndState(String value);
+
     Model getModelById(Integer id);
 
     Model addModel(Model Model);
