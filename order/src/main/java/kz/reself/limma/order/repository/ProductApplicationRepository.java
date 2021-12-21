@@ -6,12 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@Repository
+@Repository("productApplicationRepository")
 public interface ProductApplicationRepository extends JpaRepository<ProductApplication, Integer> {
     ProductApplication getById(Integer id);
     List<ProductApplication> getAllByProductOrganizationId(Integer id);

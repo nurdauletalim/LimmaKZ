@@ -1,13 +1,17 @@
 package kz.reself.limma.order.service.impl;
 
+//import kz.reself.sapa.server.bot.LimmaBot;
+
 import kz.reself.limma.order.model.*;
 import kz.reself.limma.order.repository.ProductApplicationRepository;
 import kz.reself.limma.order.repository.ProductRepository;
 import kz.reself.limma.order.service.IProductApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -20,10 +24,10 @@ import java.util.function.Function;
 @Service
 public class ProductApplicationService implements IProductApplicationService {
 
-    @Autowired
+    @Qualifier("productApplicationRepository")
     ProductApplicationRepository productApplicationRepository;
 
-    @Autowired
+    @Qualifier("productRepository")
     ProductRepository productRepository;
 
 //    @Autowired
@@ -50,11 +54,6 @@ public class ProductApplicationService implements IProductApplicationService {
     }
 
     @Override
-    public Page<ProductApplication> getAllProductId(Integer productId, Pageable pageableRequest) {
-        return productApplicationRepository.getAllByProductId(productId, pageableRequest);
-    }
-
-    @Override
     public ProductApplication createApplication(ProductApplication productApplication) {
         if (productApplication.getContact().matches("([+][7])[ ][7][0-9]{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2}")
                 && productApplication.getName().matches("^(?![\\s.]+$)[a-zA-Z\\s.]*(?![\\s.]+$)[а-яА-Я\\s.]*") && productApplicationRepository.findProductApplicationByProductIdAndStatus(productApplication.getProductId(), ProductApplicationStatus.NEW) == null) {
@@ -66,7 +65,6 @@ public class ProductApplicationService implements IProductApplicationService {
             productApplication.setClosed(null);
             productApplication.setTaken(null);
             productApplication.setManagerId(null);
-            // TODO get from account service
 //            List<Account> accounts = accountService.getAccountsIterable();
 //            for (Account account : accounts) {
 //                if (account.getChatId() != null)
@@ -150,7 +148,6 @@ public class ProductApplicationService implements IProductApplicationService {
         applicationDTO.setComment(productApplication.getComment());
         applicationDTO.setClosed(productApplication.getClosed());
         applicationDTO.setRegistered(productApplication.getRegistered());
-        //  //TODO get from Minio Service with Kafka
 //        if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //            applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //        }
@@ -176,7 +173,6 @@ public class ProductApplicationService implements IProductApplicationService {
             applicationDTO.setComment(productApplication.getComment());
             applicationDTO.setClosed(productApplication.getClosed());
             applicationDTO.setRegistered(productApplication.getRegistered());
-            //  //TODO get from Minio Service with Kafka
 //            if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //            }
@@ -206,7 +202,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//                //TODO get from Minio Service with Kafka
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }
@@ -236,7 +231,6 @@ public class ProductApplicationService implements IProductApplicationService {
             applicationDTO.setComment(productApplication.getComment());
             applicationDTO.setClosed(productApplication.getClosed());
             applicationDTO.setRegistered(productApplication.getRegistered());
-//           //TODO get from Minio Service with Kafka
 //            if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //            }
@@ -266,7 +260,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//               // TODO get
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }
@@ -301,7 +294,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//                //TODO get from Minio Service with Kafka
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }
@@ -333,7 +325,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//                //TODO get from Minio Service with Kafka
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }
@@ -366,7 +357,6 @@ public class ProductApplicationService implements IProductApplicationService {
             applicationDTO.setComment(productApplication.getComment());
             applicationDTO.setClosed(productApplication.getClosed());
             applicationDTO.setRegistered(productApplication.getRegistered());
-//            //TODO get from Minio Service with Kafka
 //            if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //            }
@@ -400,7 +390,6 @@ public class ProductApplicationService implements IProductApplicationService {
             applicationDTO.setComment(productApplication.getComment());
             applicationDTO.setClosed(productApplication.getClosed());
             applicationDTO.setRegistered(productApplication.getRegistered());
-//           //TODO get from Minio Service with Kafka -> getAllImageByProductId
 //            if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //            }
@@ -429,7 +418,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//              //TODO get from Minio Service with Kafka -> getAllImageByProductId
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }
@@ -461,7 +449,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//               //TODO get from Minio Service with Kafka -> getAllImageByProductId
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }
@@ -493,7 +480,6 @@ public class ProductApplicationService implements IProductApplicationService {
                 applicationDTO.setComment(productApplication.getComment());
                 applicationDTO.setClosed(productApplication.getClosed());
                 applicationDTO.setRegistered(productApplication.getRegistered());
-//               //TODO get from Minio Service with Kafka -> getAllImageByProductId
 //                if (imageService.getAllImageByProductId(productApplication.getProductId()).size() > 0) {
 //                    applicationDTO.setImage(imageService.getAllImageByProductId(productApplication.getProductId()).get(0).getData());
 //                }

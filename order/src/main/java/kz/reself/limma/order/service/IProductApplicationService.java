@@ -17,8 +17,6 @@ public interface IProductApplicationService {
 
     List<ProductApplication> getApplicationsByOrganizationId(Integer id);
 
-    Page<ProductApplication> getAllProductId(Integer productId, Pageable pageableRequest);
-
     ProductApplication createApplication(ProductApplication productApplication);
 
     ProductApplication updateApplication(ProductApplication productApplication);
