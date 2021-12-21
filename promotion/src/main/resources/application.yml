@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8120
   servlet:
     context-path: /promotion
 eureka:
@@ -12,7 +12,10 @@ spring:
   application:
     name: limmaPromotion
   datasource:
-    url: jdbc:postgresql://localhost:5430/sapa
-    username: postgres
+    url: jdbc:postgresql://localhost:25432/sapa
+    username: hello
     password: 123
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update

@@ -12,7 +12,10 @@ spring:
   application:
     name: limmaReview
   datasource:
-    url: jdbc:postgresql://localhost:5432/sapa
-    username: postgres
+    url: jdbc:postgresql://localhost:25432/sapa
+    username: hello
     password: 123
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
