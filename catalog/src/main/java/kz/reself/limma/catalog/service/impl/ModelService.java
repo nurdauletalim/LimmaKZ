@@ -1,5 +1,6 @@
 package kz.reself.limma.catalog.service.impl;
 
+import kz.reself.limma.catalog.constant.JobConst;
 import kz.reself.limma.catalog.model.Brand;
 import kz.reself.limma.catalog.model.Model;
 import kz.reself.limma.catalog.model.ModelDTO;
@@ -22,6 +23,9 @@ public class ModelService implements IModelService {
 
     @Autowired
     BrandRepository brandRepository;
+
+    @Autowired
+    private Producer producer;
 
     @Override
     public List<Model> getModelsIterable() {
@@ -67,8 +71,7 @@ public class ModelService implements IModelService {
         if (Model!=null){
             Model.setState(State.DEACTIVE);
             modelRepository.saveAndFlush(Model);
-            // TODO with kafka Product service -> deactiveAllProductByModelId
-//            productRepository.deactiveAllProductByModelId(Model.getId());
+            producer.sendMessage(JobConst.TOPIC, Model.getId());
         }
     }
 
@@ -78,8 +81,7 @@ public class ModelService implements IModelService {
         if (model!=null){
             model.setState(State.DEACTIVE);
             modelRepository.saveAndFlush(model);
-            // TODO with kafka Product service -> deactiveAllProductByModelId
-//            productRepository.deactiveAllProductByModelId(model.getId());
+            producer.sendMessage(JobConst.TOPIC, model.getId());
         }
     }
 

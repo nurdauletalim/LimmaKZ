@@ -1,5 +1,7 @@
 package kz.reself.limma.catalog.service.impl;
 
+import kz.reself.limma.catalog.constant.JobConst;
+import kz.reself.limma.catalog.constant.PageableConstant;
 import kz.reself.limma.catalog.model.Brand;
 import kz.reself.limma.catalog.model.BrandDTO;
 import kz.reself.limma.catalog.model.Model;
@@ -28,6 +30,9 @@ public class BrandService implements IBrandService {
     @Autowired
     private ModelRepository modelRepository;
 
+    @Autowired
+    private Producer producer;
+
 //    @Autowired
 //    private ProductRepository productRepository;
 
@@ -45,8 +50,7 @@ public class BrandService implements IBrandService {
             brandRepository.saveAndFlush(brand);
             List<Model> modelList = modelRepository.findAllByBrandId(brand.getId());
             for (Model model:modelList) {
-                // TODO get from Product service -> deactiveAllProductByModelId
-//                productRepository.deactiveAllProductByModelId(model.getId());
+                producer.sendMessage(JobConst.TOPIC, model.getId());
             }
             modelRepository.deactiveAllModelsByBrandId(brand.getId());
         }
