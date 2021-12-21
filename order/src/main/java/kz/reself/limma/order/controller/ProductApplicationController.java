@@ -377,49 +377,49 @@ public class ProductApplicationController{
 
     }
 
-    @ApiOperation(value = "Получить список applications по категории", tags = {"Application"})
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "sort", dataType = "string", value = "Поле для сортировки, которое будет использоваться вместе с order.(По умолчанию по 'id')", allowableValues = "id,code,nameKz,nameRu,nameEn", paramType = "query"),
-            @ApiImplicitParam(name = "sortDirection", dataType = "string", value = "Указывает на тип сортировки.(По умолчанию по 'asc')", allowableValues = "asc,desc", paramType = "query"),
-            @ApiImplicitParam(name = "page", dataType = "int", value = "№ страницы с которой нужно отображать.(По умолчанию page равно на 0)", paramType = "query"),
-            @ApiImplicitParam(name = "searchString", dataType = "string", value = "Поле для введение стринга для поиска", paramType = "query"),
-            @ApiImplicitParam(name = "category", dataType = "string", value = "Поле для введение стринга для поиска", paramType = "query"),
-            @ApiImplicitParam(name = "state", dataType = "string", value = "Поле для введение стринга для поиска", paramType = "query"),
-            @ApiImplicitParam(name = "size", dataType = "int", value = "Кол-во записей на одной странице..(По умолчанию size равно на 5)", paramType = "query")
-    })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Указывает, что Applications существуют и возвращает.")
-    })
-    @RequestMapping(value = "/v1/public/applications/read/history/{productId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> getHistoryOfApplications(@PathVariable("productId") Integer productId, @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
-        Sort.Direction sortDirection = Sort.Direction.ASC;
-
-        int pageNumber = PageableConstant.PAGE_NUMBER;
-
-        int pageSize = PageableConstant.PAGE_SIZE;
-
-
-        String sortBy = PageableConstant.ID_FIELD_NAME;
-
-        if (allRequestParams.containsKey("page")) {
-            pageNumber = Integer.parseInt(allRequestParams.get("page"));
-        }
-        if (allRequestParams.containsKey("size")) {
-            pageSize = Integer.parseInt(allRequestParams.get("size"));
-        }
-        if (allRequestParams.containsKey("sortDirection")) {
-
-            if (allRequestParams.get("sortDirection").equals(PageableConstant.SORT_DIRECTION_DESC))
-                sortDirection = Sort.Direction.DESC;
-
-        }
-        if (allRequestParams.containsKey("sort")) {
-            sortBy = allRequestParams.get("sort");
-        }
-        final Pageable pageableRequest = PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortBy));
-
-        return new ResponseEntity<>(iProductApplicationService.getAllProductId(productId, pageableRequest), HttpStatus.OK);
-
-    }
+//    @ApiOperation(value = "Получить список applications по категории", tags = {"Application"})
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "sort", dataType = "string", value = "Поле для сортировки, которое будет использоваться вместе с order.(По умолчанию по 'id')", allowableValues = "id,code,nameKz,nameRu,nameEn", paramType = "query"),
+//            @ApiImplicitParam(name = "sortDirection", dataType = "string", value = "Указывает на тип сортировки.(По умолчанию по 'asc')", allowableValues = "asc,desc", paramType = "query"),
+//            @ApiImplicitParam(name = "page", dataType = "int", value = "№ страницы с которой нужно отображать.(По умолчанию page равно на 0)", paramType = "query"),
+//            @ApiImplicitParam(name = "searchString", dataType = "string", value = "Поле для введение стринга для поиска", paramType = "query"),
+//            @ApiImplicitParam(name = "category", dataType = "string", value = "Поле для введение стринга для поиска", paramType = "query"),
+//            @ApiImplicitParam(name = "state", dataType = "string", value = "Поле для введение стринга для поиска", paramType = "query"),
+//            @ApiImplicitParam(name = "size", dataType = "int", value = "Кол-во записей на одной странице..(По умолчанию size равно на 5)", paramType = "query")
+//    })
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Указывает, что Applications существуют и возвращает.")
+//    })
+//    @RequestMapping(value = "/v1/public/applications/read/history/{productId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity<?> getHistoryOfApplications(@PathVariable("productId") Integer productId, @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
+//        Sort.Direction sortDirection = Sort.Direction.ASC;
+//
+//        int pageNumber = PageableConstant.PAGE_NUMBER;
+//
+//        int pageSize = PageableConstant.PAGE_SIZE;
+//
+//
+//        String sortBy = PageableConstant.ID_FIELD_NAME;
+//
+//        if (allRequestParams.containsKey("page")) {
+//            pageNumber = Integer.parseInt(allRequestParams.get("page"));
+//        }
+//        if (allRequestParams.containsKey("size")) {
+//            pageSize = Integer.parseInt(allRequestParams.get("size"));
+//        }
+//        if (allRequestParams.containsKey("sortDirection")) {
+//
+//            if (allRequestParams.get("sortDirection").equals(PageableConstant.SORT_DIRECTION_DESC))
+//                sortDirection = Sort.Direction.DESC;
+//
+//        }
+//        if (allRequestParams.containsKey("sort")) {
+//            sortBy = allRequestParams.get("sort");
+//        }
+//        final Pageable pageableRequest = PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortBy));
+//
+//        return new ResponseEntity<>(iProductApplicationService.getAllProductId(productId, pageableRequest), HttpStatus.OK);
+//
+//    }
 
 }
