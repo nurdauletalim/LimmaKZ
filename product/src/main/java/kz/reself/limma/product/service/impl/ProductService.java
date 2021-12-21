@@ -11,6 +11,7 @@ import kz.reself.limma.product.service.IPropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -30,10 +31,8 @@ public class ProductService implements IProductService {
     IPropertyService propertyService;
     @Autowired
     PropertyValueRepository propertyValueRepository;
-//    @Autowired
-//    ModelRepository modelRepository;
-//    @Autowired
-//    BrandRepository brandRepository;
+    @Autowired
+    RestTemplate restTemplate;
 
     @Override
     public Product findProductById(Integer id) {
@@ -50,7 +49,7 @@ public class ProductService implements IProductService {
                 List<Product> productList = this.productRepository.findAllByValueGroupByName(product.getValue());
                 for (Product productTemp : productList) {
                     ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(productTemp);
-                    //TODO get from Minio Service with Kafka -> findAllByProductId
+                    //TODO get from Minio Service -> findAllByProductId
 //                    productDTOWithImageCount.setImages(imageRepository.findAllByProductId(productTemp.getId()));
                     productDTOWithImageCountList.add(productDTOWithImageCount);
                 }
@@ -70,8 +69,9 @@ public class ProductService implements IProductService {
         Product product1 = this.productRepository.getById(product.getId());
         if (product1 != null) {
             if (!product1.getModelId().equals(product.getModelId())) {
-//                 //TODO get from Catalog Service with Kafka -> findById
-//                product.setName(modelRepository.findById(product.getModelId()).get().getDisplayName());
+                Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/"+ product.getModelId(), Model.class);
+                if (model != null)
+                product.setName(model.getDisplayName());
                 int ind = product.getValue().indexOf("/");
                 if (ind > 0) {
                     while (ind != product.getName().length() - 1) {
@@ -186,12 +186,14 @@ public class ProductService implements IProductService {
                 if (i.equalsIgnoreCase("Model")) {
                     List<Integer> integerList = new ArrayList<>();
                     for (int j = 0; j < properties.get(i).length; j++) {
-                        //TODO get from Catalog Service with Kafka -> getByDisplayNameAndState
-//                        Model model = modelRepository.getByDisplayNameAndState(properties.get(i)[j], State.ACTIVE);
-//                        for (Integer number : this.productRepository.getIdsByModel(
-//                              model.getId(), 0)) {
-//                            integerList.add(number);
-//                        }
+                        String value = properties.get(i)[j];
+                        Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/byDisplayName/" + value, Model.class);
+                        if (model != null) {
+                            for (Integer number : this.productRepository.getIdsByModel(
+                                    model.getId(), 0)) {
+                                integerList.add(number);
+                            }
+                        }
                     }
                     productIds.add(integerList);
                 } else {
@@ -303,8 +305,8 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOViewInfo apply(Object[] product) {
                 ProductDTOViewInfo productDTOViewInfo = new ProductDTOViewInfo(product);
-                //TODO get from Catalog Service with Kafka -> findById
-//                productDTOViewInfo.setModel(modelRepository.findById(productDTOViewInfo.getModelId()).get());
+                Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/"+ productDTOViewInfo.getModelId(), Model.class);
+                productDTOViewInfo.setModel(model);
                 return productDTOViewInfo;
             }
         });
@@ -362,7 +364,7 @@ public class ProductService implements IProductService {
                 if (i.equalsIgnoreCase("Brand")) {
                     List<Integer> integerList = new ArrayList<>();
                     for (int j = 0; j < properties.get(i).length; j++) {
-//                        //TODO get from Catalog Service with Kafka
+//                        //TODO get from Catalog Service -> getByCategoryIdAndDisplayNameAndState
 //                        Brand brand = brandRepository.getByCategoryIdAndDisplayNameAndState(categoryId, properties.get(i)[j], State.ACTIVE);
 //                        for (Integer number : this.productRepository.getIdsByBrand(brand.getId(), 0)) {
 //                            integerList.add(number);
@@ -372,11 +374,12 @@ public class ProductService implements IProductService {
                 } else if (i.equalsIgnoreCase("Model")) {
                     List<Integer> integerList = new ArrayList<>();
                     for (int j = 0; j < properties.get(i).length; j++) {
-//                      //TODO get from Catalog Service with Kafka
-//                        Model model = modelRepository.getByDisplayNameAndState(properties.get(i)[j], State.ACTIVE);
-//                        for (Integer number : this.productRepository.getIdsByModel(model.getId(), 0)) {
-//                            integerList.add(number);
-//                        }
+                        Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/byDisplayName/" + properties.get(i)[j], Model.class);
+                        if (model != null) {
+                            for (Integer number : this.productRepository.getIdsByModel(model.getId(), 0)) {
+                                integerList.add(number);
+                            }
+                        }
                     }
                     productIds.add(integerList);
                 } else {
@@ -534,7 +537,7 @@ public class ProductService implements IProductService {
             public ProductDTOWithImageCount apply(Product product) {
 
                 ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(product);
-                //TODO get from Minio Service with Kafka -> countAllByProductId
+                //TODO get from Minio Service -> countAllByProductId
 //                productDTOWithImageCount.setImageCount(imageRepository.countAllByProductId(product.getId()));
 
                 return productDTOWithImageCount;
@@ -551,7 +554,7 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOWithImageCount apply(Product product) {
                 ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(product);
-                //TODO get from Minio Service with Kafka -> countAllByProductId
+                //TODO get from Minio Service-> countAllByProductId
 //                productDTOWithImageCount.setImageCount(imageRepository.countAllByProductId(product.getId()));
                 return productDTOWithImageCount;
             }
@@ -568,7 +571,7 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOWithImageCount apply(Product product) {
                 ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(product);
-                //TODO get from Minio Service with Kafka -> countAllByProductId
+                //TODO get from Minio Service -> countAllByProductId
 //                productDTOWithImageCount.setImageCount(imageRepository.countAllByProductId(product.getId()));
 
                 return productDTOWithImageCount;
@@ -585,7 +588,7 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOWithImageCount apply(Product product) {
                 ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(product);
-                //TODO get from Minio Service with Kafka -> countAllByProductId
+                //TODO get from Minio Service -> countAllByProductId
 //                productDTOWithImageCount.setImageCount(imageRepository.countAllByProductId(product.getId()));
 
                 return productDTOWithImageCount;
@@ -602,7 +605,7 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOWithImageCount apply(Product product) {
                 ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(product);
-                //TODO get from Minio Service with Kafka -> countAllByProductId
+                //TODO get from Minio Service -> countAllByProductId
 //                productDTOWithImageCount.setImageCount(imageRepository.countAllByProductId(product.getId()));
 
                 return productDTOWithImageCount;
@@ -619,7 +622,7 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOWithImageCount apply(Product product) {
                 ProductDTOWithImageCount productDTOWithImageCount = new ProductDTOWithImageCount(product);
-                //TODO get from Minio Service with Kafka -> countAllByProductId
+                //TODO get from Minio Service -> countAllByProductId
 //                productDTOWithImageCount.setImageCount(imageRepository.countAllByProductId(product.getId()));
 
                 return productDTOWithImageCount;

@@ -83,6 +83,11 @@ public class ModelController extends CommonService {
         return builder(success("success"));
     }
 
+    @RequestMapping(value = "/v1/public/models/read/byDisplayName/{value}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> getByDisplayNameAndState(@PathVariable String value) {
+        return builder(success(modelService.getByDisplayNameAndState(value)));
+    }
+
     @RequestMapping(value = "/v1/public/models/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         return builder(success(modelService.getModelById(id)));
