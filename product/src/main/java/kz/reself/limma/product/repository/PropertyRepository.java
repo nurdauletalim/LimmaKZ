@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property,Integer> {
-    Property getById(Integer id);
+    Property getByIdAndIdIsNotNull(Integer id);
     List<Property> getAllByTemplateId(Integer id);
     List<Property> getAllByTemplateCategoryId(Integer template_categoryId);
 }

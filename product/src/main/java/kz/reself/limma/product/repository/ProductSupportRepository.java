@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface ProductSupportRepository extends JpaRepository<ProductSupport, Integer> {
-    ProductSupport getById(Integer id);
+    ProductSupport getByIdAndIdIsNotNull(Integer id);
 
     void deleteById(Integer id);
 

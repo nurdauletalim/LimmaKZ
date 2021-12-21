@@ -61,12 +61,14 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category findCategoryById(Integer id) {
-        return this.categoryRepository.getById(id);
+        return this.categoryRepository.getByIdAndIdIsNotNull(id);
     }
 
     @Override
     public Category createCategory(Category category) {
-        category.setParentCategory(findCategoryById(category.getParentCategoryId()));
+        if (category.getParentCategoryId() != null) {
+            category.setParentCategory(findCategoryById(category.getParentCategoryId()));
+        }
         category.setState(State.ACTIVE);
         return this.categoryRepository.saveAndFlush(category);
     }

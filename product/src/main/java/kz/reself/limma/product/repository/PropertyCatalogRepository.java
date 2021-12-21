@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface PropertyCatalogRepository extends JpaRepository<PropertyCatalog, Integer> {
-    PropertyCatalog getById(Integer id);
+    PropertyCatalog getByIdAndIdIsNotNull(Integer id);
 
     List<PropertyCatalog> findAllByState(State state);
 

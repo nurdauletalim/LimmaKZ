@@ -120,14 +120,14 @@ public class CategoryController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody Category category) {
         return builder(success(categoryService.createCategory(category)));
     }
 
     @ApiOperation(value = "Обновить категорию", tags = {"Category"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody Category category) {
         return builder(success(categoryService.updateCategory(category)));
     }
@@ -135,7 +135,7 @@ public class CategoryController extends CommonService {
 
     @ApiOperation(value = "Удалить категорию", tags = {"Category"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = PUBLIC_URL + "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PRIVATE_URL + "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteKiInformedConsent(@PathVariable(name = "id") Integer categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return builder(success("success"));

@@ -188,7 +188,7 @@ public class ProductApplicationController{
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = PUBLIC_URL + "/applications/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readApplicationIterable() {
         return new ResponseEntity<>(iProductApplicationService.getAllApplicationsIterable(), HttpStatus.OK);
     }

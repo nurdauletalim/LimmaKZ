@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PropertyCatalogValueRepository extends JpaRepository<PropertyCatalogValue, Integer> {
-    PropertyCatalogValue getById(Integer id);
+    PropertyCatalogValue getByIdAndIdIsNotNull(Integer id);
     PropertyCatalogValue getByDisplayName(String displayName);
     List<PropertyCatalogValue> getPropertyCatalogValueByCatalogId(Integer id);
 }

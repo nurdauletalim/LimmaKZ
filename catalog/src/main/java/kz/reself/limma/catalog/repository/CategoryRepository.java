@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-    Category getById(Integer id);
+    Category getByIdAndIdIsNotNull(Integer id);
 
     List<Category> getAllByState(State state);
 
