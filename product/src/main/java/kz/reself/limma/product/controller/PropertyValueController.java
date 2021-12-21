@@ -18,10 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = "PropertyValue",description = "PropertyValue controller")
 public class PropertyValueController extends CommonService {
-    
+
+    public static final String PRIVATE_URL = "/private/property/values";
+    public static final String PUBLIC_URL = "/public/property/values";
+
     @Autowired
     private IPropertyValueService iPropertyValueService;
 
@@ -35,7 +38,7 @@ public class PropertyValueController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Property Value существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/property/values/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -73,7 +76,7 @@ public class PropertyValueController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/property/values/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readIterable() {
         return builder(success(iPropertyValueService.findAllIterable()));
     }
@@ -82,7 +85,7 @@ public class PropertyValueController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/property/values/read/all/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readActive(@PathVariable(name = "productId") Integer id) {
         return builder(success(iPropertyValueService.getAllByProductId(id)));
     }
@@ -92,7 +95,7 @@ public class PropertyValueController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/property/values/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(iPropertyValueService.getPropertyValueById(id)));
     }
@@ -102,7 +105,7 @@ public class PropertyValueController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/private/property/values/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody PropertyValue propertyValue) {
         return builder(success(iPropertyValueService.createPropertyValue(propertyValue)));
     }
@@ -112,7 +115,7 @@ public class PropertyValueController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/public/property/values/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody PropertyValue propertyValue) {
         return builder(success(iPropertyValueService.updatePropertyValue(propertyValue)));
     }
@@ -122,12 +125,12 @@ public class PropertyValueController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/public/property/values/update/all", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update/all", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> updateAll(@RequestBody List<PropertyValue> propertyValues) {
         return builder(success(iPropertyValueService.updateProductValues(propertyValues)));
     }
     @ApiOperation(value = "Удалить Property Value", tags = {"Property Value"})
-    @RequestMapping(value = "/v1/public/property/values/delete/{propertyId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{propertyId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> delete(@PathVariable(name = "propertyId") Integer propertyId) {
         iPropertyValueService.delete(propertyId);
         return builder(success("success"));

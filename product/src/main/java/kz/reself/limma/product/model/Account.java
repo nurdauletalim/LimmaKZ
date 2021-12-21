@@ -15,8 +15,6 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
-    private String password;
-    private Boolean block;
     @Column(name = "organization_id")
     private Integer organizationId;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,7 +22,7 @@ public class Account {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Organization organization;
-    private Role role;
+    private String roles;
     private String chatId;
 
 }

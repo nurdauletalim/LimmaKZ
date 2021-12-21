@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Property Template"}, description = "Управление Property Template")
 public class PropertyTemplateController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/property/templates";
+    public static final String PUBLIC_URL = "/public/property/templates";
 
     @Autowired
     private IPropertyTemplateService propertyTemplateService;
@@ -39,7 +42,7 @@ public class PropertyTemplateController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Property Template существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/property/templates/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -85,7 +88,7 @@ public class PropertyTemplateController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/property/templates/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readIterable() {
         return builder(success(propertyTemplateService.findAllPropertyTemplatesIterable()));
     }
@@ -94,7 +97,7 @@ public class PropertyTemplateController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/property/templates/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readActive() {
         return builder(success(propertyTemplateService.findAllActiveTemplates()));
     }
@@ -104,7 +107,7 @@ public class PropertyTemplateController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/property/templates/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(propertyTemplateService.findPropertyTemplateById(id)));
     }
@@ -115,7 +118,7 @@ public class PropertyTemplateController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/private/property/templates/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody PropertyTemplate propertyTemplate) {
         return builder(success(propertyTemplateService.createPropertyTemplate(propertyTemplate)));
     }
@@ -126,13 +129,13 @@ public class PropertyTemplateController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/property/templates/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody PropertyTemplate propertyTemplate) {
         return builder(success(propertyTemplateService.updatePropertyTemplate(propertyTemplate)));
     }
     @ApiOperation(value = "Удалить Property Template", tags = {"Property Template"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/property/templates/delete/{propertyTemplateId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{propertyTemplateId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteKiInformedConsent(@PathVariable(name = "propertyTemplateId") Integer propertyTemplateId) {
         propertyTemplateService.deletePropertyTemplateById(propertyTemplateId);
         return builder(success("success"));
@@ -143,7 +146,7 @@ public class PropertyTemplateController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/property/templates/read/category/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/category/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getByCategoryId(@PathVariable("id") Integer id) {
         return builder(success(propertyTemplateService.findPropertyTemplateByCategoryId(id)));
     }

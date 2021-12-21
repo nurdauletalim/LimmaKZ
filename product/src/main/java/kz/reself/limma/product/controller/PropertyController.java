@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = "Property", description = "Управление Property")
 public class PropertyController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/properties";
+    public static final String PUBLIC_URL = "/public/properties";
 
     @Autowired
     private IPropertyService iPropertyService;
@@ -35,7 +38,7 @@ public class PropertyController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Property существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/properties/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -73,7 +76,7 @@ public class PropertyController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/properties/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readIterable() {
         return builder(success(iPropertyService.findAllPropertiesIterable()));
     }
@@ -83,7 +86,7 @@ public class PropertyController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/properties/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(iPropertyService.findPropertyById(id)));
     }
@@ -94,20 +97,20 @@ public class PropertyController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/private/properties/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody Property property) {
         return builder(success(iPropertyService.createProperty(property)));
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/properties/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody Property property) {
         return builder(success(iPropertyService.updateProperty(property)));
     }
 
     @ApiOperation(value = "Удалить Property", tags = {"Property"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/properties/delete/{propertyId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{propertyId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteKiInformedConsent(@PathVariable(name = "propertyId") Integer propertyId) {
         iPropertyService.deletePropertyById(propertyId);
         return builder(success("success"));
@@ -117,7 +120,7 @@ public class PropertyController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/properties/read/all/template/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/template/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> allPropertiesByTemplateId(@PathVariable(name = "id") Integer templateId) {
         return builder(success(iPropertyService.getPropertyByTemplateId(templateId)));
     }
@@ -125,12 +128,12 @@ public class PropertyController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/properties/read/all/category/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/category/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> allPropertiesByTemplateCategoryId(@PathVariable(name = "id") Integer categoryId) {
         return builder(success(iPropertyService.getPropertyByTemplateCategoryId(categoryId)));
     }
 
-    @RequestMapping(value = "/v1/public/properties/change/main/{propertyId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/change/main/{propertyId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> changeMain(@PathVariable(name = "propertyId") Integer propertyId) {
         return builder(success(iPropertyService.changeMain(propertyId)));
     }

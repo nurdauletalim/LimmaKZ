@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = "Application",description = "Управление Application")
 public class ProductApplicationController extends CommonService {
 
+    public static final String PRIVATE_URL = "/private/applications";
+    public static final String PUBLIC_URL = "/public/applications";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
@@ -45,7 +47,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Application существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllApplicationPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -89,7 +91,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что ApplicationDTO существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/DTO/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllApplicationDTOPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.DESC;
 
@@ -145,7 +147,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что ApplicationDTO существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/DTO/organization/{orgId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/organization/{orgId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllOrganizationApplicationDTOPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams,@PathVariable(name = "orgId") Integer orgId) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -188,7 +190,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/applications/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readApplicationIterable() {
         return builder(success(iProductApplicationService.getAllApplicationsIterable()));
     }
@@ -199,7 +201,7 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(iProductApplicationService.getProductApplicationById(id)));
     }
@@ -209,7 +211,7 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/all/organization/{organizationId}/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/organization/{organizationId}/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationsByOrganization(@PathVariable("organizationId") Integer id) {
         return builder(success(iProductApplicationService.getApplicationsByOrganizationId(id)));
     }
@@ -219,7 +221,7 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/public/applications/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createApplication(@RequestBody ProductApplication productApplication) {
         return builder(success(iProductApplicationService.createApplication(productApplication)));
     }
@@ -229,13 +231,13 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/public/applications/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> updateApplication(@RequestBody ProductApplication productApplication) {
         return builder(success(iProductApplicationService.updateApplication(productApplication)));
     }
 
     @ApiOperation(value = "Удалить Application", tags = {"Application"})
-    @RequestMapping(value = "/v1/public/applications/delete/{applicationId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{applicationId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteApplicationById(@PathVariable(name = "applicationId") Integer id) {
         iProductApplicationService.deleteApplicationById(id);
         return builder(success("success"));
@@ -245,7 +247,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/DTO/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readApplicationDTOIterable() {
         return builder(success(iProductApplicationService.findAllDTOSIterable()));
     }
@@ -256,7 +258,7 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/DTO/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getDTO(@PathVariable("id") Integer id) {
         return builder(success(iProductApplicationService.getDTOById(id)));
     }
@@ -266,7 +268,7 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/DTO/all/organization/{organizationId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/all/organization/{organizationId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationDTOsByOrganization(@PathVariable("organizationId") Integer id) {
         return builder(success(iProductApplicationService.getAllDTObyOrgId(id)));
     }
@@ -276,17 +278,17 @@ public class ProductApplicationController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/public/applications/update/DTO", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update/DTO", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> updateApplicationDTO(@RequestBody ApplicationDTO productApplicationDTO) {
         return builder(success(iProductApplicationService.updateApplicationDTO(productApplicationDTO)));
     }
 
-    @RequestMapping(value = "/v1/public/applications/read/all/{contact}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/{contact}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationsDTOByContact(@PathVariable("contact") String contact) {
         return builder(success(iProductApplicationService.getApplicationsByContacts(contact)));
     }
 
-    @RequestMapping(value = "/v1/public/applications/check", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/check", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getApplicationsDTOByContact(@RequestParam("name") String name,@RequestParam("contact") String contact,@RequestParam("productId") Integer productId) {
 //        System.out.println(application);
         return builder(success(iProductApplicationService.checkApplication(name, contact, productId)));
@@ -302,7 +304,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что ApplicationDTO существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/DTO/status/{status}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/status/{status}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllApplicationDTOPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams,@PathVariable(name = "status") ProductApplicationStatus status) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -336,7 +338,7 @@ public class ProductApplicationController extends CommonService {
         return builder(success(allApplicationPageable));
     }
 
-    @RequestMapping(value = "/v1/public/applications/read/DTO/status/{status}/organization/{orgId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/DTO/status/{status}/organization/{orgId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readByStatusAndOrganization(@RequestParam Map<String, String> allRequestParams, @PathVariable(name = "status") Integer status,
                                                          @PathVariable(name = "orgId") Integer orgId) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
@@ -370,7 +372,7 @@ public class ProductApplicationController extends CommonService {
         return builder(success(allApplicationPageable));
     }
 
-    @RequestMapping(value = "/v1/public/applications/count/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/count/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAmountByOrgId(@PathVariable(name = "organizationId") Integer organizationId, @PathVariable(name = "interval") String interval) {
         return builder(success(iProductApplicationService.getAmountApplicationByOrganizationId(organizationId,interval)));
     }
@@ -388,7 +390,7 @@ public class ProductApplicationController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Applications существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/applications/read/history/{productId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/history/{productId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getHistoryOfApplications(@PathVariable("productId") Integer productId, @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 

@@ -32,9 +32,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Product"}, description = "Управление продуктами", authorizations = {@Authorization(value = "bearerAuth")})
 public class ProductController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/products";
+    public static final String PUBLIC_URL = "/public/products";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
@@ -62,7 +65,7 @@ public class ProductController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Product существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/products/read/all/dto/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/dto/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllDTOPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -118,7 +121,7 @@ public class ProductController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/products/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readActive(@RequestParam Map<String, String> allRequestParams) {
 
         String search = "";
@@ -203,7 +206,7 @@ public class ProductController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/products/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         return builder(success(productService.findProductById(id)));
     }
@@ -213,7 +216,7 @@ public class ProductController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/products/read/group/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/group/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getProductsGroupByModel(@PathVariable("id") Integer id) {
         return builder(success(productService.findProductDTOById(id)));
     }
@@ -223,12 +226,12 @@ public class ProductController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/products/read/properties/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/properties/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllProductProperties(@PathVariable("categoryId") Integer categoryId) {
         return builder(success(productService.getAllProductProperties(categoryId)));
     }
 
-    @RequestMapping(value = "/v1/public/products/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> changeState(@RequestParam Integer id, @RequestParam Integer state) {
         return builder(success(productService.changeStateProduct(id, State.BOOKED)));
     }
@@ -240,22 +243,22 @@ public class ProductController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/private/products/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody Product product) {
         return builder(success(productService.createProduct(product)));
     }
 
-    @RequestMapping(value = "/v1/public/products/property/values/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/property/values/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getPropertyValueList(@PathVariable("productId") Integer productId) {
         return builder(success(productService.getPropertyValueList(productId)));
     }
 
-    @RequestMapping(value = "/v1/public/products/property/values/main/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/property/values/main/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getMainPropertyValueList(@PathVariable("productId") Integer productId) {
         return builder(success(productService.getMainPropertyValueList(productId)));
     }
 
-    @RequestMapping(value = "/v1/public/products/property/values/notmain/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/property/values/notmain/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getNotMainPropertyValueList(@PathVariable("productId") Integer productId) {
         return builder(success(productService.getNotMainPropertyValueList(productId)));
     }
@@ -266,14 +269,14 @@ public class ProductController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/public/products/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody Product product) {
         return builder(success(productService.updateProduct(product)));
     }
 
     @ApiOperation(value = "Удалить Product", tags = {"Product"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/public/products/delete/{productId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{productId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteKiInformedConsent(@PathVariable(name = "productId") Integer productId) {
         productService.deleteProductById(productId);
         return builder(success("success"));
@@ -281,7 +284,7 @@ public class ProductController extends CommonService {
 
     EntityManager em;
 
-    @RequestMapping(value = "/v1/public/products/read/all/filter", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/filter", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getfilter(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -308,7 +311,7 @@ public class ProductController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/products/read/all/properties", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/properties", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getProductsWithParameters(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams0, @RequestParam Map<String, String> allRequestParams, @RequestBody Map<String, String[]> properties) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -342,17 +345,17 @@ public class ProductController extends CommonService {
 //        return builder(success(productsPage));
     }
 
-    @RequestMapping(value = "/v1/public/products/read/category", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/category", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getDisplayCategoryProducts(@RequestParam Integer categoryId) {
         return builder(success(productService.getDisplayCategoryProducts(categoryId, 4)));
     }
 
-    @RequestMapping(value = "/v1/public/products/read/group/date", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/group/date", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getLastProductsByPublishedDate(@RequestParam Integer count) {
         return builder(success(productService.getLastProductsSortByPublishedDate(count)));
     }
 
-    @RequestMapping(value = "/v1/public/products/read/group/properties/category/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/group/properties/category/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getProductGroupByProperties(@PathVariable("categoryId") Integer categoryId, @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -384,7 +387,7 @@ public class ProductController extends CommonService {
 
     }
 
-    @RequestMapping(value = "/v1/public/products/read/dto/group/properties/category/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/dto/group/properties/category/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getProductDTOGroupByProperties(@PathVariable("categoryId") Integer categoryId, @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -416,22 +419,22 @@ public class ProductController extends CommonService {
 
     }
 
-    @RequestMapping(value = "/v1/public/products/filter", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/filter", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> filterProducts(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams0, @RequestParam Map<String, String> allRequestParams, @RequestBody Map<String, String[]> properties) {
         return builder(success(productService.filterProducts(allRequestParams0,allRequestParams, properties)));
     }
 
-    @RequestMapping(value = "v1/public/products/count/organization/{organizationId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/count/organization/{organizationId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAmount(@PathVariable(name = "organizationId") Integer organizationId) {
         return builder(success(productRepository.getAmountByOrganizationId(organizationId)));
     }
 
-    @RequestMapping(value = "v1/public/products/income/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/income/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getIncome(@PathVariable(name = "organizationId") Integer organizationId, @PathVariable(name = "interval") String interval) {
         return builder(success(productService.getIncomeByOrganizationId(organizationId,interval)));
     }
 
-    @RequestMapping(value = "v1/public/products/count/sold/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/count/sold/organization/{organizationId}/{interval}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getSoldAmount(@PathVariable(name = "organizationId") Integer organizationId, @PathVariable(name = "interval") String interval) {
         return builder(success(productService.getSoldAmountByOrganizationId(organizationId,interval)));
     }

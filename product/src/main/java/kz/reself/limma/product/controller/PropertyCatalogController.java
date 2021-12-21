@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Property Catalog"}, description = "Управление Property Catalog")
 public class PropertyCatalogController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/property/catalogs";
+    public static final String PUBLIC_URL = "/public/property/catalogs";
 
     @Autowired
     private IPropertyCatalogService propertyCatalogService;
@@ -39,7 +42,7 @@ public class PropertyCatalogController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что Property Catalog существуют и возвращает.")
     })
-    @RequestMapping(value = "/v1/public/property/catalogs/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -83,7 +86,7 @@ public class PropertyCatalogController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/property/catalogs/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/iterable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readIterable() {
         return builder(success(propertyCatalogService.findAllPropertyCatalogsIterable()));
     }
@@ -92,7 +95,7 @@ public class PropertyCatalogController extends CommonService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Указывает, что записи существуют и возвращаются.")
     })
-    @RequestMapping(value = "/v1/public/property/catalogs/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> readActive() {
         return builder(success(propertyCatalogService.findAllActivePropertyCatalogs()));
     }
@@ -102,7 +105,7 @@ public class PropertyCatalogController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запрошенная запись найдена"),
             @ApiResponse(code = 404, message = "Указывает, что запрошенная запись не найдена.")
     })
-    @RequestMapping(value = "/v1/public/property/catalogs/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(propertyCatalogService.findPropertyCatalogById(id)));
     }
@@ -113,7 +116,7 @@ public class PropertyCatalogController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/private/property/catalogs/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@RequestBody PropertyCatalog propertyCatalog) {
         return builder(success(propertyCatalogService.createPropertyCatalog(propertyCatalog)));
     }
@@ -124,20 +127,20 @@ public class PropertyCatalogController extends CommonService {
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/property/catalogs/update", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = PRIVATE_URL + "/update", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<?> update(@RequestBody PropertyCatalog propertyCatalog) {
         return builder(success(propertyCatalogService.updatePropertyCatalog(propertyCatalog)));
     }
 
     @ApiOperation(value = "Удалить Property Catalog", tags = {"Property Catalog"})
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/v1/public/property/catalogs/delete/{propertyCatalogId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PRIVATE_URL + "/delete/{propertyCatalogId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteKiInformedConsent(@PathVariable(name = "propertyCatalogId") Integer propertyCatalogId) {
         propertyCatalogService.deletePropertyCatalogById(propertyCatalogId);
         return builder(success("success"));
     }
 
-    @RequestMapping(value = "/v1/public/property/catalogs/read/code/{catalogCode}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = PRIVATE_URL + "/read/code/{catalogCode}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> getCatalogByCode(@PathVariable(name = "catalogCode") String catalogCode) {
         return builder(success(propertyCatalogService.getCatalogByCode(catalogCode)));
     }

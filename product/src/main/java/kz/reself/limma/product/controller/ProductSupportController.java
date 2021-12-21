@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/v1")
 @Api(tags = {"Product Support"})
 public class ProductSupportController extends CommonService {
+
+    public static final String PRIVATE_URL = "/private/product/supports";
+    public static final String PUBLIC_URL = "/public/product/supports";
 
     @Autowired
     private IProductSupportService iProductSupportService;
@@ -29,7 +33,7 @@ public class ProductSupportController extends CommonService {
     @Autowired
     private ProductSupportRepository productSupportRepository;
 
-    @RequestMapping(value = "/v1/public/product/supports/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/read/all/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllPageable(@ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
@@ -77,30 +81,30 @@ public class ProductSupportController extends CommonService {
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/private/product/supports/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> create(@RequestBody ProductSupport productSupport) {
         return builder(success(iProductSupportService.create(productSupport)));
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/private/product/supports/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         iProductSupportService.delete(id);
         return builder(success("success"));
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = "/v1/private/product/supports/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody ProductSupport productSupport) {
         return builder(success(iProductSupportService.update(productSupport)));
     }
 
-    @RequestMapping(value = "/v1/public/product/supports/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getById(@PathVariable(name = "id") Integer id) {
         return builder(success(iProductSupportService.getById(id)));
     }
 
-    @RequestMapping(value = "/v1/public/supports/read/history/{productId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/history/{productId}/pageable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getHistoryOfModeration(@PathVariable("productId") Integer productId, @ApiParam(hidden = true) @RequestParam Map<String, String> allRequestParams) {
         Sort.Direction sortDirection = Sort.Direction.ASC;
 
