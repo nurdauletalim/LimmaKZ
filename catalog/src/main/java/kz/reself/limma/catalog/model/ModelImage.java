@@ -14,9 +14,8 @@ public class ModelImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "data")
-    private byte[] data;
-
+    @Column(name = "file_id")
+    private Long fileId;
 
     @Column(name = "model_id")
     private Integer modelId;

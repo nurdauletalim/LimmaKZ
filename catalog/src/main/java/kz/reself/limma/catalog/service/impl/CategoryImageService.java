@@ -62,18 +62,19 @@ public class CategoryImageService implements ICategoryImageService {
 
     @Override
     public List<RImages> getImagesById(Integer categoryId) {
-        List<RImages> rImagesList = new ArrayList<>();
-        List<CategoryImage> images = getAllImageByCategoryId(categoryId);
-        for (CategoryImage img : images) {
-            rImagesList.add(new RImages(
-                    "product/" + img.getCategoryId() + "/" + img.getId(),
-                    img.getData(),
-                    img.getId(),
-                    img.getData().length,
-                    img.getId().toString()
-            ));
-        }
-        return rImagesList;
+//        TODO
+//        List<RImages> rImagesList = new ArrayList<>();
+//        List<CategoryImage> images = getAllImageByCategoryId(categoryId);
+//        for (CategoryImage img : images) {
+//            rImagesList.add(new RImages(
+//                    "product/" + img.getCategoryId() + "/" + img.getId(),
+//                    img.getData(),
+//                    img.getId(),
+//                    img.getData().length,
+//                    img.getId().toString()
+//            ));
+//        }
+        return null;
     }
 
 }

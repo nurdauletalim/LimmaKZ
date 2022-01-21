@@ -1,5 +1,5 @@
 server:
-  port: 443
+  port: 7575
   servlet:
     context-path: /file-storage
 eureka:
@@ -14,5 +14,24 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/sapa
     username: postgres
-    password: 123
+    password: postgres
     driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+minio:
+  endpoint: ${MINIO_ENDPOINT:http://localhost:448/}
+  minioRootUser: ${MINIO_ROOT_USER:minio}
+  minioRootPassword: ${MINIO_ROOT_PASSWORD:minio123}
+  bucket: ${MINIO_BUCKET:limma}
+  checkBucket: ${MINIO_CHECK_BUCKET:true}
+  createBucket: ${MINIO_CREATE_BUCKET:true}
+
+file:
+  allowedMimeTypes: application/pdf,image/jpeg,image/png,image/svg+xml,application/xml,text/xml

@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  minio:
+    image: minio/minio
+    ports:
+      - "448:444"
+      - "4444:4444"
+    volumes:
+      - /data/images:/data
+      - /tmp/.minio:/root/.minio
+    environment:
+      - "MINIO_ACCESS_KEY=minio"
+      - "MINIO_SECRET_KEY=minio123"
+    command: server --address ":444" --console-address ":4444" /data

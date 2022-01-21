@@ -1,6 +1,7 @@
 package kz.reself.limma.catalog.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,9 +15,6 @@ public class CategoryImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "data")
-    private byte[] data;
-
     @Column(name = "category_id")
     private Integer categoryId;
 
@@ -25,4 +23,6 @@ public class CategoryImage {
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private Category category;
 
+    @Column(name = "file_id")
+    private Long fileId;
 }

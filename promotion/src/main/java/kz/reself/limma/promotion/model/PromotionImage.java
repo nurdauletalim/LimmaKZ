@@ -13,9 +13,8 @@ public class PromotionImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "data")
-    private byte[] data;
-
+    @Column(name = "file_id")
+    private Long fileId;
 
     @Column(name = "promotion_id")
     private Integer promotionId;

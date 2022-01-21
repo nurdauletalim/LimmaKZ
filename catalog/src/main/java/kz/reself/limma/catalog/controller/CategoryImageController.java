@@ -54,17 +54,17 @@ public class CategoryImageController extends CommonService {
         return builder(success(iCategoryImageService.createImage(image)));
     }
 
-    @RequestMapping(value = PUBLIC_URL + "/update/{categoryId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> updateImage(@RequestBody List<MultipartFile> files, @PathVariable("categoryId") Integer categoryId) throws IOException {
-        List<CategoryImage> images = new ArrayList<>();
-        for (MultipartFile file: files) {
-            CategoryImage image = new CategoryImage();
-            image.setData(file.getBytes());
-            image.setCategoryId(categoryId);
-            images.add(image);
-        }
-        return builder(success(iCategoryImageService.updateImage(images)));
-    }
+//    @RequestMapping(value = PUBLIC_URL + "/update/{categoryId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity<?> updateImage(@RequestBody List<MultipartFile> files, @PathVariable("categoryId") Integer categoryId) throws IOException {
+//        List<CategoryImage> images = new ArrayList<>();
+//        for (MultipartFile file: files) {
+//            CategoryImage image = new CategoryImage();
+//            image.setData(file.getBytes());
+//            image.setCategoryId(categoryId);
+//            images.add(image);
+//        }
+//        return builder(success(iCategoryImageService.updateImage(images)));
+//    }
 
     @RequestMapping(value = PUBLIC_URL + "/all/{categoryId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllByCategoryId(@PathVariable("categoryId") Integer categoryId) throws IOException {

@@ -113,18 +113,19 @@ public class PromotionImageService implements IPromotionImageService {
                     @HystrixProperty(name = "maxQueuesize", value = "50"),
             })
     public List<RImages> getImagesById(Integer promotionId) {
-        List<RImages> rImagesList = new ArrayList<>();
-        List<PromotionImage> images = getAllImageByPromotionId(promotionId);
-        for (PromotionImage img : images) {
-            rImagesList.add(new RImages(
-                    "product/" + img.getPromotionId() + "/" + img.getId(),
-                    img.getData(),
-                    img.getId(),
-                    img.getData().length,
-                    img.getId().toString()
-            ));
-        }
-        return rImagesList;
+//        TODO
+//        List<RImages> rImagesList = new ArrayList<>();
+//        List<PromotionImage> images = getAllImageByPromotionId(promotionId);
+//        for (PromotionImage img : images) {
+//            rImagesList.add(new RImages(
+//                    "product/" + img.getPromotionId() + "/" + img.getId(),
+//                    img.getData(),
+//                    img.getId(),
+//                    img.getData().length,
+//                    img.getId().toString()
+//            ));
+//        }
+        return null;
     }
 
     public String alternativeMethod(){

@@ -61,18 +61,19 @@ public class PromotionImageController {
         return new ResponseEntity<>(iPromotionImageService.createImage(image), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/v1/public/promotion/image/update/{promotionId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> updateImage(@RequestBody List<MultipartFile> files, @PathVariable("promotionId") Integer promotionId) throws IOException {
-        List<PromotionImage> images = new ArrayList<>();
-        for (MultipartFile file : files) {
-            PromotionImage image = new PromotionImage();
-            image.setData(file.getBytes());
-            image.setPromotionId(promotionId);
-            images.add(image);
-        }
-        return new ResponseEntity<>(iPromotionImageService.updateImage(images), HttpStatus.OK);
-
-    }
+    //TODO
+//    @RequestMapping(value = "/v1/public/promotion/image/update/{promotionId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity<?> updateImage(@RequestBody List<MultipartFile> files, @PathVariable("promotionId") Integer promotionId) throws IOException {
+//        List<PromotionImage> images = new ArrayList<>();
+//        for (MultipartFile file : files) {
+//            PromotionImage image = new PromotionImage();
+//            image.setData(file.getBytes());
+//            image.setPromotionId(promotionId);
+//            images.add(image);
+//        }
+//        return new ResponseEntity<>(iPromotionImageService.updateImage(images), HttpStatus.OK);
+//
+//    }
 
     @RequestMapping(value = "/v1/public/promotion/image/all/{promotionId}", method = RequestMethod.GET)
     public ResponseEntity<?> updateImage(@PathVariable("promotionId") Integer promotionId) throws IOException {

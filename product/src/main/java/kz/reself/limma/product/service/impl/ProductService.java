@@ -69,7 +69,7 @@ public class ProductService implements IProductService {
         Product product1 = this.productRepository.getById(product.getId());
         if (product1 != null) {
             if (!product1.getModelId().equals(product.getModelId())) {
-                Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/"+ product.getModelId(), Model.class);
+                Model model = restTemplate.getForObject("http://localhost:8087/catalog/api/v1/public/models/read/"+ product.getModelId(), Model.class);
                 if (model != null)
                 product.setName(model.getDisplayName());
                 int ind = product.getValue().indexOf("/");
@@ -187,7 +187,7 @@ public class ProductService implements IProductService {
                     List<Integer> integerList = new ArrayList<>();
                     for (int j = 0; j < properties.get(i).length; j++) {
                         String value = properties.get(i)[j];
-                        Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/byDisplayName/" + value, Model.class);
+                        Model model = restTemplate.getForObject("http://localhost:8087/catalog/api/v1/public/models/read/byDisplayName/" + value, Model.class);
                         if (model != null) {
                             for (Integer number : this.productRepository.getIdsByModel(
                                     model.getId(), 0)) {
@@ -305,7 +305,7 @@ public class ProductService implements IProductService {
             @Override
             public ProductDTOViewInfo apply(Object[] product) {
                 ProductDTOViewInfo productDTOViewInfo = new ProductDTOViewInfo(product);
-                Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/"+ productDTOViewInfo.getModelId(), Model.class);
+                Model model = restTemplate.getForObject("http://localhost:8087/catalog/api/v1/public/models/read/"+ productDTOViewInfo.getModelId(), Model.class);
                 productDTOViewInfo.setModel(model);
                 return productDTOViewInfo;
             }
@@ -374,7 +374,7 @@ public class ProductService implements IProductService {
                 } else if (i.equalsIgnoreCase("Model")) {
                     List<Integer> integerList = new ArrayList<>();
                     for (int j = 0; j < properties.get(i).length; j++) {
-                        Model model = restTemplate.getForObject("http://limmaCatalog/catalog/api/v1/public/models/read/byDisplayName/" + properties.get(i)[j], Model.class);
+                        Model model = restTemplate.getForObject("http://localhost:8087/catalog/api/v1/public/models/read/byDisplayName/" + properties.get(i)[j], Model.class);
                         if (model != null) {
                             for (Integer number : this.productRepository.getIdsByModel(model.getId(), 0)) {
                                 integerList.add(number);
