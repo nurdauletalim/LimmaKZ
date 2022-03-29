@@ -7,10 +7,10 @@ services:
       - "448:444"
       - "4444:4444"
     volumes:
-      - /data/images:/data
+      - minio-volume
       - /tmp/.minio:/root/.minio
-      - C:\Users\turga\Desktop\Limma\images
     environment:
       - "MINIO_ACCESS_KEY=minio"
       - "MINIO_SECRET_KEY=minio123"
     command: server --address ":444" --console-address ":4444" /data
+    restart: unless-stopped
