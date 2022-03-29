@@ -1,5 +1,6 @@
 package kz.reself.limma.gatewaycrm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter
@@ -12,6 +13,7 @@ public class LoginResponse {
     private String token;
     private Long id;
     private String username;
+    @JsonIgnore
     private String password;
     private String roles;
 

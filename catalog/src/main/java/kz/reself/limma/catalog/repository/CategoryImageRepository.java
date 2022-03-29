@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CategoryImageRepository extends JpaRepository<CategoryImage, Integer> {
-    CategoryImage getByIdAndIdIsNotNull(Integer id);
     CategoryImage findByCategoryId(Integer categoryId);
     List<CategoryImage> findAllByCategoryId(Integer id);
     @Query(value = "SELECT * FROM category_image where category_id in " +

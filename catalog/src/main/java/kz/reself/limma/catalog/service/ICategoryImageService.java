@@ -20,11 +20,11 @@ public interface ICategoryImageService {
 
     CategoryImage findImageById(Integer id);
 
-    CategoryImage createImage(CategoryImage image);
+    CategoryImage createImage(CategoryImage categoryImage);
 
     List<CategoryImage> updateImage(List<CategoryImage> image);
 
     void deleteImageById(Integer id);
 
-    List<RImages> getImagesById(Integer categoryId);
+    List<CategoryImage> getImagesById(Integer categoryId);
 }

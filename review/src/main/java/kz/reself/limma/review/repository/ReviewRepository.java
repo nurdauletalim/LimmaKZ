@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review,Integer> {
-    Review getByIdAndIdIsNotNull(Integer id);
+    Review getById(Integer id);
 }

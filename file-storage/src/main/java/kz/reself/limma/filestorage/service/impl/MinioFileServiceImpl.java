@@ -113,13 +113,13 @@ public class MinioFileServiceImpl implements MinioFileService {
 //        FileExtension fileExtension = getFileExtensionByMimeType(mimeType);
         String originalFileName = file.getOriginalFilename();
         String fileName = FilenameUtils.getName(originalFileName);
+        System.out.println("originalFileName:" +  originalFileName);
+        System.out.println("fileName:" + fileName);
 
         FileEntity fileEntity = new FileEntity();
         String bucket = "limma";
         if (!minioUtil.bucketExists(bucket))
             minioUtil.makeBucket("limma");
-
-        minioUtil.uploadFile(file.getInputStream(), bucket, fileName, file.getContentType());
 
         fileEntity.setFileExtension(mimeType);
         fileEntity.setFilename(fileName);
@@ -127,7 +127,8 @@ public class MinioFileServiceImpl implements MinioFileService {
         fileEntity.setFileType(file.getContentType());
         fileEntity.setBucket(bucket);
         fileEntity = repository.saveAndFlush(fileEntity);
-        String publicUrl = params.getEndpoint() + "/" + params.getBucket() + '/' + fileEntity.getId();
+        minioUtil.uploadFile(file.getInputStream(), bucket, fileEntity.getId().toString(), file.getContentType());
+        String publicUrl = params.getEndpoint() + params.getBucket() + '/' + fileEntity.getId();
         fileEntity.setStorageUrl(publicUrl);
         return repository.saveAndFlush(fileEntity);
     }

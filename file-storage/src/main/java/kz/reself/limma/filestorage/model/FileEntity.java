@@ -26,11 +26,11 @@ public class FileEntity {
     private Long id;
 
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false)
     @JsonIgnore
     protected Timestamp createdAt;
 
-    @Column(name = "created_by", updatable = false, nullable = false)
+    @Column(name = "created_by", updatable = false)
     @JsonIgnore
     protected String createdBy;
 

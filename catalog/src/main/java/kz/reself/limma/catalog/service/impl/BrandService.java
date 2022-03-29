@@ -68,7 +68,7 @@ public class BrandService implements IBrandService {
         List<Brand> brandList = brandRepository.getAllByState(State.ACTIVE);
         for (Brand brand: brandList) {
             BrandDTO brandDTO = new BrandDTO(brand);
-            brandDTO.setCategoryName(categoryRepository.getById(brand.getCategoryId()).getName());
+            brandDTO.setCategoryName(categoryRepository.findById(brand.getCategoryId()).get().getName());
             brandDTOList.add(brandDTO);
         }
         return brandDTOList;

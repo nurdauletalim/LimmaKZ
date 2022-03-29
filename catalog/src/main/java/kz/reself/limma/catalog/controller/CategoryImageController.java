@@ -49,9 +49,9 @@ public class CategoryImageController extends CommonService {
         return builder(success(iCategoryImageService.getAllImageByCategoryId(categoryId)));
     }
 
-    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST, produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<?> createImage(@RequestBody CategoryImage image) {
-        return builder(success(iCategoryImageService.createImage(image)));
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST)
+    public ResponseEntity<?> createImage(@RequestBody CategoryImage categoryImage) {
+        return ResponseEntity.ok(iCategoryImageService.createImage(categoryImage));
     }
 
 //    @RequestMapping(value = PUBLIC_URL + "/update/{categoryId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 
 services:
   minio:
@@ -9,6 +9,7 @@ services:
     volumes:
       - /data/images:/data
       - /tmp/.minio:/root/.minio
+      - C:\Users\turga\Desktop\Limma\images
     environment:
       - "MINIO_ACCESS_KEY=minio"
       - "MINIO_SECRET_KEY=minio123"

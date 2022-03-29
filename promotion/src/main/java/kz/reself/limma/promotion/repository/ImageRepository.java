@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Integer> {
-    Image getByIdAndIdIsNotNull(Integer id);
+    Image getById(Integer id);
 
     List<Image> findAllByIdIn(List<Integer> imageIds);
 

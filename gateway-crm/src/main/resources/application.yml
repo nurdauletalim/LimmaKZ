@@ -38,7 +38,7 @@ spring:
           predicates:
             - Path=/review/**
         - id: FILE-SERVICE
-          uri: ${File_SERVICE_URL:http://localhost:7575}
+          uri: ${FILE_SERVICE_URL:http://localhost:7575}
           predicates:
             - Path=/storage/**
 #          filters:

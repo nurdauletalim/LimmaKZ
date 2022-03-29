@@ -61,7 +61,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category findCategoryById(Integer id) {
-        return this.categoryRepository.getByIdAndIdIsNotNull(id);
+        return this.categoryRepository.findById(id).get();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void deleteCategoryById(Integer id) throws InternalException {
-        Category category = categoryRepository.getById(id);
+        Category category = categoryRepository.findById(id).get();
         category.setState(State.DEACTIVE);
         categoryRepository.save(category);
     }
@@ -83,7 +83,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category updateCategory(Category category) throws InternalError {
         if (category.getId() != category.getParentCategoryId()) {
-            category.setState(categoryRepository.getById(category.getId()).getState());
+            category.setState(categoryRepository.findById(category.getId()).get().getState());
             return categoryRepository.save(category);
         }
         return null;
@@ -110,7 +110,7 @@ public class CategoryService implements ICategoryService {
 
     private List<CategoryDTO> getByParent(Integer id) {
         List<CategoryDTO> categories = new ArrayList<>();
-        CategoryDTO category = from(categoryRepository.getById(id));
+        CategoryDTO category = from(categoryRepository.findById(id).get());
         categories.add(category);
         if (category.getParentId() != null) categories.addAll(getByParent(category.getParentId()));
         return categories;

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface PromotionRepository extends JpaRepository<Promotion, Integer> {
-    Promotion getByIdAndIdIsNotNull(Integer id);
+    Promotion getById(Integer id);
 //    List<Promotion> getAllByOrganization(Organization organization);
     //    @Query(value = "Select * FROM promotion WHERE (published_date <= ?1 and expiration_date >= ?1) and state = true", nativeQuery = true)
     @Query(value = "Select * FROM promotion WHERE expiration_date >= ?1 and state = true", nativeQuery = true)

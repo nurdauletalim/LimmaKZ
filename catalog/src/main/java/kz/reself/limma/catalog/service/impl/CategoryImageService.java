@@ -41,12 +41,12 @@ public class CategoryImageService implements ICategoryImageService {
 
     @Override
     public CategoryImage findImageById(Integer id) {
-        return this.categoryImageRepository.getById(id);
+        return this.categoryImageRepository.findById(id).get();
     }
 
     @Override
-    public CategoryImage createImage(CategoryImage image) {
-        return this.categoryImageRepository.save(image);
+    public CategoryImage createImage(CategoryImage categoryImage) {
+        return this.categoryImageRepository.save(categoryImage);
     }
 
     @Override
@@ -56,25 +56,12 @@ public class CategoryImageService implements ICategoryImageService {
 
     @Override
     public void deleteImageById(Integer id) {
-        CategoryImage image = this.categoryImageRepository.getOne(id);
-        this.categoryImageRepository.delete(image);
+        this.categoryImageRepository.deleteById(id);
     }
 
     @Override
-    public List<RImages> getImagesById(Integer categoryId) {
-//        TODO
-//        List<RImages> rImagesList = new ArrayList<>();
-//        List<CategoryImage> images = getAllImageByCategoryId(categoryId);
-//        for (CategoryImage img : images) {
-//            rImagesList.add(new RImages(
-//                    "product/" + img.getCategoryId() + "/" + img.getId(),
-//                    img.getData(),
-//                    img.getId(),
-//                    img.getData().length,
-//                    img.getId().toString()
-//            ));
-//        }
-        return null;
+    public List<CategoryImage> getImagesById(Integer categoryId) {
+        return categoryImageRepository.findAllByCategoryId(categoryId);
     }
 
 }

@@ -15,7 +15,6 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
-    private String password;
     private Boolean block;
     @Column(name = "organization_id")
     private Integer organizationId;

@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    Product getByIdAndIdIsNotNull(Integer id);
+    Product getById(Integer id);
 
     @Query(value = "SELECT * FROM product p1 " +
             "INNER JOIN (SELECT value, min(price) as price FROM product where state = ?1 and category_id = ?2 GROUP BY value) p2 " +
