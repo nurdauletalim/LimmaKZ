@@ -10,10 +10,6 @@ import java.util.List;
 
 public interface ICategoryImageService {
 
-    Page<CategoryImage> findAllImagesPageable(Pageable pageable) throws InternalException;
-
-    List<CategoryImage> findAllImagesIterable() throws InternalException;
-
     List<CategoryImage> getAllImageByCategoryId(Integer categoryId);
 
     List<CategoryImage> getAllImageByParentId(Integer categoryId);
@@ -21,8 +17,6 @@ public interface ICategoryImageService {
     CategoryImage findImageById(Integer id);
 
     CategoryImage createImage(CategoryImage categoryImage);
-
-    List<CategoryImage> updateImage(List<CategoryImage> image);
 
     void deleteImageById(Integer id);
 

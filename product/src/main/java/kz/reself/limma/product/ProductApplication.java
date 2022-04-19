@@ -54,7 +54,6 @@ public class ProductApplication {
 	@Bean
 	public ConsumerFactory<String, Integer> consumerFactory() {
 		JsonDeserializer<Integer> deserializer = new JsonDeserializer<>(Integer.class);
-//		deserializer.setRemoveTypeHeaders(false);
 		deserializer.addTrustedPackages("*");
 		deserializer.setUseTypeMapperForKey(true);
 

@@ -16,7 +16,7 @@ public class CategoryImage {
     private Integer id;
 
     @Column(name = "category_id")
-    private Integer categoryId;
+    private Integer objectId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference

@@ -6,23 +6,23 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "category_image")
+@Table(name = "product_image")
 @Data
-public class CategoryImage {
+public class ProductImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "data")
-    private byte[] data;
-
-    @Column(name = "category_id")
-    private Integer categoryId;
+    @Column(name = "product_id")
+    private Integer objectId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
-    private Category category;
+    private Product product;
+
+    @Column(name = "file_id")
+    private Long fileId;
 
 }

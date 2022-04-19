@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 public interface PropertyTemplateRepository extends JpaRepository<PropertyTemplate, Integer> {
-    PropertyTemplate getById(Integer id);
     List<PropertyTemplate> getAllByState(State state);
     Page<PropertyTemplate> findAllByState(State state, Pageable pageable);
     PropertyTemplate getFirstByCategoryId(Integer catalogId);

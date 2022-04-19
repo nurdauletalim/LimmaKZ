@@ -1,6 +1,7 @@
 package kz.reself.limma.product.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "property_template")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PropertyTemplate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class PropertyTemplate implements Serializable {
     @JsonIgnore
     private Category category;
 
-    @JsonIgnore
+    @Enumerated(EnumType.ORDINAL)
     private State state;
 
 

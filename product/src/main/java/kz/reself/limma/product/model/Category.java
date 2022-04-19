@@ -28,9 +28,4 @@ public class Category {
     @JsonIgnore
     private State state;
 
-//    @JsonManagedReference
-    @JsonIgnore
-    @OneToMany(mappedBy = "category")
-    private List<CategoryImage> images = new ArrayList<>();
-
 }

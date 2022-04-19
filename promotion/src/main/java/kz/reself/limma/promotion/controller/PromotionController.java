@@ -23,8 +23,8 @@ import java.util.Map;
 @Api(value = "Управление PROMOTION")
 public class PromotionController {
 
-    public static final String PRIVATE_URL = "/private/promotions";
-    public static final String PUBLIC_URL = "/public/promotions";
+    public static final String PRIVATE_URL = "/api/v1/private/promotions";
+    public static final String PUBLIC_URL = "/api/v1/public/promotions";
 
     @Autowired
     PromotionService promotionService;

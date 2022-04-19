@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "product_application")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProductApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

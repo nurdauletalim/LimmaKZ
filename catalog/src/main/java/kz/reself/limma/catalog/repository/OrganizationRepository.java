@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization, Integer> {
-    Organization getById(Integer id);
     @Query(value = "Select * FROM organization WHERE LOWER(name) like %?1%", nativeQuery = true)
     Page<Organization> findAllSearchString(String searchString, Pageable pageable);
 }

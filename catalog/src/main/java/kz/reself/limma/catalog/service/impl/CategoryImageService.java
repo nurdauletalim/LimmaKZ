@@ -20,16 +20,6 @@ public class CategoryImageService implements ICategoryImageService {
     private CategoryImageRepository categoryImageRepository;
 
     @Override
-    public Page<CategoryImage> findAllImagesPageable(Pageable pageable) throws InternalException {
-        return this.categoryImageRepository.findAll(pageable);
-    }
-
-    @Override
-    public List<CategoryImage> findAllImagesIterable() throws InternalException {
-        return this.categoryImageRepository.findAll();
-    }
-
-    @Override
     public List<CategoryImage> getAllImageByCategoryId(Integer categoryId) {
         return this.categoryImageRepository.findAllByCategoryId(categoryId);
     }
@@ -47,11 +37,6 @@ public class CategoryImageService implements ICategoryImageService {
     @Override
     public CategoryImage createImage(CategoryImage categoryImage) {
         return this.categoryImageRepository.save(categoryImage);
-    }
-
-    @Override
-    public List<CategoryImage> updateImage(List<CategoryImage> image) {
-        return this.categoryImageRepository.saveAll(image);
     }
 
     @Override
