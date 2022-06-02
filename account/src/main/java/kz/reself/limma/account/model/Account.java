@@ -1,6 +1,7 @@
 package kz.reself.limma.account.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Data
 @Table
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account {
 
     @Id
@@ -20,6 +22,9 @@ public class Account {
     private String password;
 
     private String roles;
+
+    @Column(name = "super_admin")
+    private Boolean superAdmin;
 
     @Column(name = "organization_id")
     private Long organizationId;

@@ -66,7 +66,10 @@ public class ProductService implements IProductService {
     public Product createProduct(Product product) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         product.setPublishedDate(timestamp);
-        Product product1 = this.productRepository.getById(product.getId());
+        Product product1 = null;
+        if (product.getId() != null) {
+            product1 = this.productRepository.getById(product.getId());
+        }
         if (product1 != null) {
             if (!product1.getModelId().equals(product.getModelId())) {
                 Model model = restTemplate.getForObject("http://localhost:8087/catalog/api/v1/public/models/read/"+ product.getModelId(), Model.class);

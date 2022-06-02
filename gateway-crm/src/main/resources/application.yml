@@ -44,7 +44,7 @@ spring:
 #          filters:
 #            - StripPrefix=1
   r2dbc:
-    url: ${DB_URL:r2dbc:postgresql://localhost:5431/sapa}
+    url: ${DB_URL:r2dbc:postgresql://localhost:5432/sapa}
     username: sapa
     password: sapa_pass
   main:

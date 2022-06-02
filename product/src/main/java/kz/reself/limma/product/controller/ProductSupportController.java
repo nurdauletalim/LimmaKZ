@@ -81,7 +81,7 @@ public class ProductSupportController extends CommonService {
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> create(@RequestBody ProductSupport productSupport) {
         return builder(success(iProductSupportService.create(productSupport)));
     }
@@ -94,7 +94,7 @@ public class ProductSupportController extends CommonService {
     }
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CONTENT_MANAGER')")
-    @RequestMapping(value = PUBLIC_URL + "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> update(@RequestBody ProductSupport productSupport) {
         return builder(success(iProductSupportService.update(productSupport)));
     }

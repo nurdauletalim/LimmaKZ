@@ -12,7 +12,7 @@ spring:
   application:
     name: limmaProduct
   datasource:
-    url: jdbc:postgresql://localhost:5431/sapa?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:5432/sapa?createDatabaseIfNotExist=true
     username: sapa
     password: sapa_pass
     driver-class-name: org.postgresql.Driver

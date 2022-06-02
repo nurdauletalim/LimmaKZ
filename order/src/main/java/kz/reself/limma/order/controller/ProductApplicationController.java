@@ -132,7 +132,7 @@ public class ProductApplicationController{
             allApplicationPageable = this.iProductApplicationService.findAllDTOSPageable(pageableRequest);
         }
 
-        return new ResponseEntity<>(allApplicationPageable, HttpStatus.OK);
+        return ResponseEntity.ok(allApplicationPageable);
     }
 
     @ApiOperation(value = "Получить список ApplicationDTO pageable", tags = {"ApplicationDTO"})

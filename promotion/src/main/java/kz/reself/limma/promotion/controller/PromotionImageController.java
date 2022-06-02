@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Image"}, description = "Управление image")
 public class PromotionImageController {
 
@@ -34,18 +34,18 @@ public class PromotionImageController {
     @Autowired
     ImageRepository repository;
 
-    @RequestMapping(value = "/v1/public/promotion/image/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/public/promotion/image/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(iPromotionImageService.findImageById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/v1/public/promotion/image/read/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/public/promotion/image/read/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAll() {
         return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/v1/public/promotion/image/readByPromotionId/{promotionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/public/promotion/image/readByPromotionId/{promotionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllImagesByPromotionId(@PathVariable("promotionId") Integer promotionId) {
         return new ResponseEntity<>(iPromotionImageService.getAllImageByPromotionId(promotionId), HttpStatus.OK);
     }
@@ -55,7 +55,7 @@ public class PromotionImageController {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/private/promotion/image/create", method = RequestMethod.POST, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/private/promotion/image/create", method = RequestMethod.POST)
     public ResponseEntity<?> createImage(@RequestBody PromotionImage image) {
 
         return new ResponseEntity<>(iPromotionImageService.createImage(image), HttpStatus.OK);
@@ -75,7 +75,7 @@ public class PromotionImageController {
 //
 //    }
 
-    @RequestMapping(value = "/v1/public/promotion/image/all/{promotionId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/public/promotion/image/all/{promotionId}", method = RequestMethod.GET)
     public ResponseEntity<?> updateImage(@PathVariable("promotionId") Integer promotionId) throws IOException {
         return new ResponseEntity<>(iPromotionImageService.getImagesById(promotionId), HttpStatus.OK);
 
@@ -83,7 +83,7 @@ public class PromotionImageController {
 
 
     @ApiOperation(value = "Удалить Image", tags = {"Image"})
-    @RequestMapping(value = "/v1/public/promotion/image/delete/{imageId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = "/public/promotion/image/delete/{imageId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteImage(@PathVariable(name = "imageId") Integer imageId) {
         iPromotionImageService.deleteImageById(imageId);
         return new ResponseEntity<>(HttpStatus.OK);

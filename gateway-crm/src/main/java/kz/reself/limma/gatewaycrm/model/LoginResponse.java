@@ -16,6 +16,7 @@ public class LoginResponse {
     @JsonIgnore
     private String password;
     private String roles;
+    private Long organizationId;
 
     @Override
     public String toString() {

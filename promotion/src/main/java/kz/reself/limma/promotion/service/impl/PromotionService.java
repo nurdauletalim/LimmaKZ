@@ -56,7 +56,7 @@ public class PromotionService implements IPromotionService {
         for (int i = 0; i < promotionObjects.size(); i++) {
             PromotionDTO promotionDTO = new PromotionDTO();
             promotionDTO.setId((Integer) promotionObjects.get(i)[0]);
-            promotionDTO.setImages(promotionImageRepository.findAllByPromotionId(promotionDTO.getId()));
+            promotionDTO.setImages(promotionImageRepository.findAllByObjectId(promotionDTO.getId()));
             promotionDTOS.add(promotionDTO);
         }
         return promotionDTOS;

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8088
   servlet:
     context-path: /limma
 eureka:
@@ -11,3 +11,36 @@ eureka:
 spring:
   application:
     name: limmaGatewayPortal
+  main:
+      web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: ACCOUNT-SERVICE
+          uri: ${ACCOUNT_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/account/**
+        - id: CATALOG-SERVICE
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/catalog/**
+        - id: ORDER-SERVICE
+          uri: ${ORDER_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/order/**
+        - id: PRODUCT-SERVICE
+          uri: ${PRODUCT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/product/**
+        - id: PROMOTION-SERVICE
+          uri: ${PROMOTION_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/promotion/**
+        - id: REVIEW-SERVICE
+          uri: ${REVIEW_SERVICE_URL:http://localhost:8086}
+          predicates:
+            - Path=/review/**
+        - id: FILE-SERVICE
+          uri: ${FILE_SERVICE_URL:http://localhost:7575}
+          predicates:
+            - Path=/storage/**

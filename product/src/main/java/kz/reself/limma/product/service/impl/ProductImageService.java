@@ -19,7 +19,7 @@ public class ProductImageService implements IProductImageService {
 
     @Override
     public List<ProductImage> getAllImagesByProductId(Integer id) {
-        return this.productImageRepository.findAllByProductId(id);
+        return this.productImageRepository.findAllByObjectId(id);
     }
 
     @Override

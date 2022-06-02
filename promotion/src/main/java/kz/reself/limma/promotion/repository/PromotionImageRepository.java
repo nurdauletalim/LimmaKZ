@@ -13,5 +13,5 @@ public interface PromotionImageRepository extends JpaRepository<PromotionImage, 
 
     List<PromotionImage> findAllByIdIn(List<Integer> imageIds);
 
-    List<PromotionImage> findAllByPromotionId(Integer id);
+    List<PromotionImage> findAllByObjectId(Integer id);
 }

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Repository("productRepository")
+@Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Product getById(Integer id);

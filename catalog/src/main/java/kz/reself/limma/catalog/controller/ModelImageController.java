@@ -21,17 +21,18 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Api(tags = {"Image"}, description = "Управление image")
 public class ModelImageController extends CommonService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationController.class);
     @Autowired
     IModelImageService iModelImageService;
-//    @Autowired
-//    ImageRepository repository;
 
-    @RequestMapping(value = "/v1/public/model/image/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public static final String PRIVATE_URL = "/private/model/image";
+    public static final String PUBLIC_URL = "/public/model/image";
+
+    @RequestMapping(value = PUBLIC_URL + "/read/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return builder(success(iModelImageService.findImageById(id)));
     }
@@ -42,7 +43,7 @@ public class ModelImageController extends CommonService {
 //    }
 
 
-    @RequestMapping(value = "/v1/public/model/image/readByModelId/{modelId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/readByModelId/{modelId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllImagesByModelId(@PathVariable("modelId") Integer modelId) {
         return builder(success(iModelImageService.getAllImageByModelId(modelId)));
     }
@@ -52,9 +53,8 @@ public class ModelImageController extends CommonService {
             @ApiResponse(code = 200, message = "Указывает, что запись создана"),
             @ApiResponse(code = 404, message = "Указывает, что запись не создана.")
     })
-    @RequestMapping(value = "/v1/private/model/image/create", method = RequestMethod.POST, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST)
     public ResponseEntity<?> createImage(@RequestBody ModelImage image) {
-
         return builder(success(iModelImageService.createImage(image)));
     }
 //    TODO
@@ -71,15 +71,15 @@ public class ModelImageController extends CommonService {
 //
 //    }
 
-    @RequestMapping(value = "/v1/public/model/image/all/{modelId}", method = RequestMethod.GET)
+    @RequestMapping(value = PUBLIC_URL + "/all/{modelId}", method = RequestMethod.GET)
     public ResponseEntity<?> updateImage( @PathVariable("modelId") Integer modelId) throws IOException {
-        return builder(success(iModelImageService.getImagesById(modelId)));
+        return builder(success(iModelImageService.getAllImageByModelId(modelId)));
 
     }
 
 
     @ApiOperation(value = "Удалить Image", tags = {"Image"})
-    @RequestMapping(value = "/v1/public/model/image/delete/{imageId}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = PUBLIC_URL + "/delete/{imageId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<?> deleteImage(@PathVariable(name = "imageId") Integer imageId) {
         iModelImageService.deleteImageById(imageId);
         return builder(success("success"));

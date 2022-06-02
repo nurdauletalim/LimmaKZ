@@ -29,6 +29,8 @@ public class Account implements UserDetails {
     @JsonIgnore
     private String password;
     private String roles;
+    @Column(name = "organization_id")
+    private Long organizationId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

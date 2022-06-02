@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Repository("productApplicationRepository")
+@Repository
 public interface ProductApplicationRepository extends JpaRepository<ProductApplication, Integer> {
     List<ProductApplication> getAllByProductOrganizationId(Integer id);
     List<ProductApplication> getAllByContact(String contact);
@@ -37,7 +37,7 @@ public interface ProductApplicationRepository extends JpaRepository<ProductAppli
     @Query(value = "SELECT * FROM product_application WHERE product_id in (SELECT id FROM product WHERE organization_id = ?1) AND status = ?2 ORDER BY registered DESC", nativeQuery = true)
     Page<ProductApplication> getAllByProductOrganizationIdAndStatus(Integer orgId, Integer status, Pageable pageable);
 
-    Page<ProductApplication> getAllByProductId(Integer productId, Pageable pageable);
+    Page<ProductApplication> findAllByProductId(Integer productId, Pageable pageable);
 
     Page<ProductApplication> getAllByProductIdAndManagerId(Integer productId, Integer managerId, Pageable pageable);
 

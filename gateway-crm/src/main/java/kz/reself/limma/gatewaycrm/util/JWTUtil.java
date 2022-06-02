@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JWTUtil implements Serializable {
+public class  JWTUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

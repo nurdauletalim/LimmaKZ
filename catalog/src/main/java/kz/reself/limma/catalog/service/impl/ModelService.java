@@ -55,7 +55,7 @@ public class ModelService implements IModelService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public Model getModelById(Integer id) {
         return modelRepository.getByIdAndState(id, State.ACTIVE);
@@ -67,7 +67,7 @@ public class ModelService implements IModelService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public Model getByDisplayNameAndState(String value) {
         return modelRepository.getByDisplayNameAndState(value, State.ACTIVE);

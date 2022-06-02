@@ -4,6 +4,6 @@ services:
     image: postgres:11
     restart: unless-stopped
     ports:
-      - 5431:5432
+      - 5432:5432
     env_file:
       - .env

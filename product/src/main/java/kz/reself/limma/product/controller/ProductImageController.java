@@ -26,7 +26,7 @@ public class ProductImageController {
         return ResponseEntity.ok(iProductImageService.findImageById(id));
     }
 
-    @RequestMapping(value = PUBLIC_URL + "/readByProductId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PUBLIC_URL + "/all/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllImagesByProductId(@PathVariable("id") Integer productId) {
         return ResponseEntity.ok(iProductImageService.getAllImagesByProductId(productId));
     }

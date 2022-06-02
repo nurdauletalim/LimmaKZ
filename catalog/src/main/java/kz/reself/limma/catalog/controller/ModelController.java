@@ -75,7 +75,7 @@ public class ModelController extends CommonService {
     }
 
 //    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_CONTENT_MANAGER')")
-    @RequestMapping(value = PUBLIC_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> create(@RequestBody Model model) {
         return builder(success(modelService.addModel(model)));
     }

@@ -17,7 +17,7 @@ public class PromotionImage {
     private Long fileId;
 
     @Column(name = "promotion_id")
-    private Integer promotionId;
+    private Integer objectId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference

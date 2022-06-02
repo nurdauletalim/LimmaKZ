@@ -12,7 +12,7 @@ spring:
   application:
     name: limmaCatalog
   datasource:
-    url: jdbc:postgresql://localhost:5431/sapa
+    url: jdbc:postgresql://localhost:5432/sapa
     username: sapa
     password: sapa_pass
     driver-class-name: org.postgresql.Driver

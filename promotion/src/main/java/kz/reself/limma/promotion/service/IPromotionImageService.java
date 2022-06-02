@@ -23,5 +23,5 @@ public interface IPromotionImageService {
 
     void deleteImageById(Integer id);
 
-    List<RImages> getImagesById(Integer promotionId);
+    List<PromotionImage> getImagesById(Integer promotionId);
 }

@@ -24,7 +24,7 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public Page<PromotionImage> findAllImagesPageable(Pageable pageable) {
         return this.promotionImageRepository.findAll(pageable);
@@ -36,7 +36,7 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public List<PromotionImage> findAllImagesIterable() {
         return this.promotionImageRepository.findAll();
@@ -48,10 +48,10 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public List<PromotionImage> getAllImageByPromotionId(Integer promotionId) {
-        return this.promotionImageRepository.findAllByPromotionId(promotionId);
+        return this.promotionImageRepository.findAllByObjectId(promotionId);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public PromotionImage findImageById(Integer id) {
         return this.promotionImageRepository.getById(id);
@@ -72,7 +72,7 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public PromotionImage createImage(PromotionImage image) {
         return this.promotionImageRepository.save(image);
@@ -84,7 +84,7 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public List<PromotionImage> updateImage(List<PromotionImage> image) {
         return this.promotionImageRepository.saveAll(image);
@@ -96,7 +96,7 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
     public void deleteImageById(Integer id) {
         PromotionImage image = this.promotionImageRepository.getOne(id);
@@ -110,22 +110,10 @@ public class PromotionImageService implements IPromotionImageService {
             threadPoolKey = "alternativeMethod",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "100"),
-                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+                    @HystrixProperty(name = "maxQueueSize", value = "50"),
             })
-    public List<RImages> getImagesById(Integer promotionId) {
-//        TODO
-//        List<RImages> rImagesList = new ArrayList<>();
-//        List<PromotionImage> images = getAllImageByPromotionId(promotionId);
-//        for (PromotionImage img : images) {
-//            rImagesList.add(new RImages(
-//                    "product/" + img.getPromotionId() + "/" + img.getId(),
-//                    img.getData(),
-//                    img.getId(),
-//                    img.getData().length,
-//                    img.getId().toString()
-//            ));
-//        }
-        return null;
+    public List<PromotionImage> getImagesById(Integer promotionId) {
+        return promotionImageRepository.findAllByObjectId(promotionId);
     }
 
     public String alternativeMethod(){

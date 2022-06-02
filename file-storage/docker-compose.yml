@@ -7,7 +7,7 @@ services:
       - "448:444"
       - "4444:4444"
     volumes:
-      - minio-volume
+      - /minio
       - /tmp/.minio:/root/.minio
     environment:
       - "MINIO_ACCESS_KEY=minio"

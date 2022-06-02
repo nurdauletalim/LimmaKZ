@@ -1,6 +1,7 @@
 package kz.reself.limma.catalog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
@@ -11,10 +12,11 @@ import java.util.List;
 @Entity
 @Table(name = "model")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String value;
     private String displayName;
@@ -28,7 +30,7 @@ public class Model {
     private Brand brand;
     private State state;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "model")
     private List<ModelImage> images = new ArrayList<>();
 

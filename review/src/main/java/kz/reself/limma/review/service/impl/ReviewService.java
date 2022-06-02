@@ -22,7 +22,7 @@ public class ReviewService implements IReviewService {
 //            threadPoolKey = "alternativeMethod",
 //            threadPoolProperties = {
 //                    @HystrixProperty(name = "coreSize", value = "100"),
-//                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "50"),
 //            })
     public List<Review> getProductReviewsIterable() {
         return reviewRepository.findAll();
@@ -34,7 +34,7 @@ public class ReviewService implements IReviewService {
 //            threadPoolKey = "alternativeMethod",
 //            threadPoolProperties = {
 //                    @HystrixProperty(name = "coreSize", value = "100"),
-//                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "50"),
 //            })
     public Review getProductReviewById(Integer id) {
         return reviewRepository.getById(id);
@@ -46,7 +46,7 @@ public class ReviewService implements IReviewService {
 //            threadPoolKey = "alternativeMethod",
 //            threadPoolProperties = {
 //                    @HystrixProperty(name = "coreSize", value = "100"),
-//                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "50"),
 //            })
     public Review addProductReview(Review Review) {
         return reviewRepository.save(Review);
@@ -58,7 +58,7 @@ public class ReviewService implements IReviewService {
 //            threadPoolKey = "alternativeMethod",
 //            threadPoolProperties = {
 //                    @HystrixProperty(name = "coreSize", value = "100"),
-//                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "50"),
 //            })
     public Review updateProductReview(Review Review) {
         return reviewRepository.save(Review);
@@ -70,7 +70,7 @@ public class ReviewService implements IReviewService {
 //            threadPoolKey = "alternativeMethod",
 //            threadPoolProperties = {
 //                    @HystrixProperty(name = "coreSize", value = "100"),
-//                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "50"),
 //            })
     public void deleteProductReview(Review Review) {
         reviewRepository.delete(Review);
@@ -82,7 +82,7 @@ public class ReviewService implements IReviewService {
 //            threadPoolKey = "alternativeMethod",
 //            threadPoolProperties = {
 //                    @HystrixProperty(name = "coreSize", value = "100"),
-//                    @HystrixProperty(name = "maxQueuesize", value = "50"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "50"),
 //            })
     public void deleteProductReviewById(Integer id) {
         reviewRepository.deleteById(id);

@@ -12,7 +12,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:5431/sapa?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:5432/sapa?createDatabaseIfNotExist=true
     username: sapa
     password: sapa_pass
     driver-class-name: org.postgresql.Driver
@@ -31,3 +31,12 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+springbootwebflux:
+  jjwt:
+    password:
+      encoder:
+        secret: myjwtsecret
+        iteration: 33
+        keylength: 256
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave512bitsKeySize
+    expiration: 30000

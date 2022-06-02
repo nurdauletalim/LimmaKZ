@@ -45,10 +45,12 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(LoginRequest request) {
+        System.out.println(passwordEncoder.encode(request.getPassword()));
         Account account = findByUsername(request.getUsername()).toProcessor().block();
+        System.out.println(account);
         if (account != null) {
             boolean checkPassword = account.getPassword().equals(passwordEncoder.encode(request.getPassword()));
-            boolean isEmpData = account.getRoles().contains("ROLE_USER");
+            boolean isEmpData = account.getRoles() != null && account.getRoles().contains("ROLE_CONTENT_MANAGER");
             if (checkPassword && isEmpData) {
                 return ResponseEntity.ok(buildWithLanguage(account));
             } else if (checkPassword) {
@@ -90,6 +92,7 @@ public class UserService {
                 .username(employee.getUsername())
                 .password(employee.getPassword())
                 .roles(employee.getRoles())
+                .organizationId(employee.getOrganizationId())
                 .build();
     }
 

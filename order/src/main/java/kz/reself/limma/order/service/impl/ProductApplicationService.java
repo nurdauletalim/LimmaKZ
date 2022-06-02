@@ -6,6 +6,7 @@ import kz.reself.limma.order.model.*;
 import kz.reself.limma.order.repository.ProductApplicationRepository;
 import kz.reself.limma.order.repository.ProductRepository;
 import kz.reself.limma.order.service.IProductApplicationService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -22,15 +23,13 @@ import java.util.List;
 import java.util.function.Function;
 
 @Service
+@AllArgsConstructor
 public class ProductApplicationService implements IProductApplicationService {
 
-    @Qualifier("productApplicationRepository")
-    private ProductApplicationRepository productApplicationRepository;
+    private final ProductApplicationRepository productApplicationRepository;
+    private final ProductRepository productRepository;
 
-    @Qualifier("productRepository")
-    private ProductRepository productRepository;
-
-//    @Autowired
+    //    @Autowired
 //    private LimmaBot limmaBot;
 
     @Override
@@ -283,7 +282,7 @@ public class ProductApplicationService implements IProductApplicationService {
 
     @Override
     public Page<ApplicationDTO> findAllDTOSByProductPageable(Integer productId, Pageable pageable) {
-        Page<ProductApplication> productApplicationsPageable = productApplicationRepository.getAllByProductId(productId, pageable);
+        Page<ProductApplication> productApplicationsPageable = productApplicationRepository.findAllByProductId(productId, pageable);
 
         Page<ApplicationDTO> applicationDTOPageable = productApplicationsPageable.map(new Function<ProductApplication, ApplicationDTO>() {
             @Override

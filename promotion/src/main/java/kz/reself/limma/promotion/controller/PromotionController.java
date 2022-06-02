@@ -90,4 +90,10 @@ public class PromotionController {
     public ResponseEntity<?> get(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(promotionService.getById(id), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Get promotions by id")
+    @RequestMapping(value = PRIVATE_URL + "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> create(@RequestBody Promotion promotion) {
+        return new ResponseEntity<>(promotionService.createPromotion(promotion), HttpStatus.OK);
+    }
 }
